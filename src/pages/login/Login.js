@@ -12,6 +12,7 @@ import DirectionsCar from '@mui/icons-material/DirectionsCar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import track from '../../assets/track.jpg';
 
 function Copyright(props) {
   return (
@@ -30,6 +31,9 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
+defaultTheme.palette.primary.main = '#482736'
+defaultTheme.palette.primary.dark = '#512a33'
+
 export default function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -41,17 +45,37 @@ export default function Login() {
   };
 
   return (
+    <div style={{ 
+      backgroundImage: `url(${track})`,
+      height: '100vh',
+      backgroundPosition: 'center top',
+      backgroundSize: '100% auto'
+    }}>
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            paddingTop: 8,
+          }}
+        >
+        </Box>
+        <Box
+          sx={{
+            padding: 4,
+            opacity: 0.9,
+            borderRadius: 1,
+            boxShadow: 3,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            bgcolor: 'primary.main',
+            '&:hover': {
+              bgcolor: 'primary.dark',
+            },
           }}
         >
+        
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <DirectionsCar />
           </Avatar>
@@ -109,5 +133,6 @@ export default function Login() {
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
+    </div>
   );
 }

@@ -7,7 +7,7 @@ import Garage from "./pages/garage/Garage"
 
 function App() {
  return (
-   <div className="App">
+   <div>
      <BrowserRouter>
        <Routes>
          <Route path="/" element={<Login />} />

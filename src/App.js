@@ -1,9 +1,15 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom"
 import Login from "./pages/login/Login"
-import Main from "./pages/main/Main"
 import Layout from "./components/layout/Layout"
+import Overview from "./pages/overview/Overview"
+import Chat from "./pages/chat/Chat"
 import Shop from "./pages/shop/Shop"
-import Garage from "./pages/garage/Garage"
+import Trening from "./pages/trening/Trening"
+import Race from "./pages/race/Race"
+import Work from "./pages/work/Work"
+import Team from "./pages/team/Team"
+import Premium from "./pages/premium/Premium"
+import Ranking from "./pages/ranking/Ranking"
 
 function App() {
  return (
@@ -12,9 +18,15 @@ function App() {
        <Routes>
          <Route path="/" element={<Login />} />
          <Route element={<Layout />} >
-           <Route path="main" element={<Main />} />
+           <Route path="overview" element={<Overview />} />
+           <Route path="chat" element={<Chat />} />
            <Route path="shop" element={<Shop />} />
-           <Route path="garage" element={<Garage />} />
+           <Route path="trening" element={<Trening />} />
+           <Route path="race" element={<Race />} />
+           <Route path="work" element={<Work />} />
+           <Route path="team" element={<Team />} />
+           <Route path="premium" element={<Premium />} />
+           <Route path="ranking" element={<Ranking />} />
          </Route>
        </Routes>
      </BrowserRouter>

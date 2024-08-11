@@ -2,7 +2,7 @@ export default function Shop() {
   
     return (
         <div>
-        <div>Shop</div>
+        <div>sklep tuningowy</div>
         </div>
     )
 }

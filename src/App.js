@@ -21,6 +21,7 @@ function App() {
            <Route path="overview" element={<Overview />} />
            <Route path="chat" element={<Chat />} />
            <Route path="shop" element={<Shop />} />
+           <Route path="shop/:cat" element={<Shop />} />
            <Route path="trening" element={<Trening />} />
            <Route path="race" element={<Race />} />
            <Route path="work" element={<Work />} />

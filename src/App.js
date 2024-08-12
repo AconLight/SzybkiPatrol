@@ -13,7 +13,6 @@ import Ranking from "./pages/ranking/Ranking"
 
 function App() {
  return (
-   <div>
      <BrowserRouter>
        <Routes>
          <Route path="/" element={<Login />} />
@@ -31,7 +30,6 @@ function App() {
          </Route>
        </Routes>
      </BrowserRouter>
-   </div>
  )
 }
 

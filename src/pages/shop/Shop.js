@@ -58,7 +58,7 @@ export default function Shop() {
         // },
     ];
 
-    console.log(images)
+    
 
 
     return (
@@ -79,10 +79,11 @@ export default function Shop() {
             <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
                 {items.map((item, idx) => (
                     <Box>
-                    <Box>{item.name}</Box>
+                    {Object.keys(item).filter(el => el != "_id" && el != "imgId").map(key => (<Box>{key}: {item[key]}</Box>))}
                         <ImageListItem key={idx}>
                         <img
                             src={imageDict[item.imgId]}
+                            alt={item + ""}
                             loading="lazy"
                         />
                         </ImageListItem>

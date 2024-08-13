@@ -16,12 +16,13 @@ export default function Shop() {
 
     const shop = useSelector((state) => state.shop)
     const dispatch = useDispatch()
-    console.log(shop)
+
     
     React.useEffect(() => {
         dispatch(fetchShopItems());
      }, []);
 
+     console.log(shop)
     const items = shop.items && shop.items.filter(el => el?.category == cat)
   
     const testMenuItems = [
@@ -70,7 +71,7 @@ export default function Shop() {
             </Box>
             <Box>{cat}</Box>
             <Divider />
-            <ImageList cols={5}>
+            <ImageList cols={1} sx={{width: '40%'}}>
                 {items.map((item, idx) => (
                     <Box sx={{p: 2, boxShadow: 5}}>
                     {Object.keys(item).filter(el => el != "_id" && el != "imgUrl").map(key => (<Box>{key}: {item[key]}</Box>))}

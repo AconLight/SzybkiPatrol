@@ -13,6 +13,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import track from '../../assets/track.jpg';
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '../../redux/user/userSlice';
+import { useNavigate } from 'react-router-dom';
+
 
 function Copyright(props) {
   return (
@@ -35,14 +39,28 @@ defaultTheme.palette.primary.main = '#482736'
 defaultTheme.palette.primary.dark = '#512a33'
 
 export default function Login() {
+  const user = useSelector((state) => state.user)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const formData = new FormData(event.currentTarget);
+    const data = {
+      login: formData.get('email'),
+      password: formData.get('password'),
+    };
+    dispatch(login(data))
   };
+
+  React.useEffect(() => {
+    if (user.data) {
+        console.log('navigate')
+        navigate('/overview')
+    } else {
+
+    }
+ }, [user]);
 
   return (
     <div style={{ 
@@ -109,7 +127,7 @@ export default function Login() {
             />
             <Button
               type="submit"
-              href='overview'
+              //href='overview'
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}

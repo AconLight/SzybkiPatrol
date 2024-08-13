@@ -1,9 +1,25 @@
+import React from "react";
 import { Box, Button } from "@mui/material";
 import { NavLink, Outlet } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import Divider from '@mui/material/Divider';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/user/userSlice";
+
 export default function Layout() {
+    const navigate = useNavigate();
+    const user = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+    React.useEffect(() => {
+        console.log(user)
+        if (!user.data) {
+            navigate('/')
+        }
+     }, [user]);
+    
+
    const testMenuItems = [
        {
            href: 'overview',
@@ -63,15 +79,23 @@ export default function Layout() {
         </Box>
         <Divider />
         <Box sx={{display: 'flex', flexDirection: 'row', mt: 15, ml: 15}}>
-            <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+            <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
                 {testMenuItems.map(({ href, title }) => (
-                    <NavLink to={href} >
+                    href == '/' ? 
                         <Button
+                            onClick={() => dispatch(logout())}
                             variant="contained"
                             sx={{ mx: 3, my: 1, width: '200px' }}>
                             {title}
                         </Button>
-                    </NavLink>
+                        :
+                        <NavLink to={href} >
+                            <Button
+                                variant="contained"
+                                sx={{ mx: 3, my: 1, width: '200px' }}>
+                                {title}
+                            </Button>
+                        </NavLink>
                             ))}
             </Box>
             <Box sx={{m: 5}}>

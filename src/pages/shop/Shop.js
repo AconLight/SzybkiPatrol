@@ -6,9 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { fetchShopItems } from '../../redux/shop/shopSlice';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-const images = require.context('../../assets/shopitems', true);
-const imageKeys = images.keys()
-const imageDict = {}
+
 
 
 export default function Shop() {
@@ -18,11 +16,7 @@ export default function Shop() {
 
     const shop = useSelector((state) => state.shop)
     const dispatch = useDispatch()
-
-    for(const keyId in imageKeys) {
-        imageDict[(imageKeys[keyId]+"").replace('./', '').replace('.jpg', '')] = images(imageKeys[keyId])
-      } 
-      console.log(imageDict)
+    console.log(shop)
     
     React.useEffect(() => {
         dispatch(fetchShopItems());
@@ -76,15 +70,14 @@ export default function Shop() {
             </Box>
             <Box>{cat}</Box>
             <Divider />
-            <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+            <ImageList cols={5}>
                 {items.map((item, idx) => (
-                    <Box>
-                    {Object.keys(item).filter(el => el != "_id" && el != "imgId").map(key => (<Box>{key}: {item[key]}</Box>))}
+                    <Box sx={{p: 2, boxShadow: 5}}>
+                    {Object.keys(item).filter(el => el != "_id" && el != "imgUrl").map(key => (<Box>{key}: {item[key]}</Box>))}
                         <ImageListItem key={idx}>
                         <img
-                            src={imageDict[item.imgId]}
-                            alt={item + ""}
-                            loading="lazy"
+                            src={item.imgUrl}
+                            alt="asd"
                         />
                         </ImageListItem>
                     </Box>

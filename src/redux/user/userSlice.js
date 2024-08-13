@@ -61,6 +61,7 @@ export const userSlice = createSlice({
     reducers: {
       logout: (state) => {
         state.data = undefined
+        sessionStorage.clear()
       }
     }, 
     extraReducers: (builder) => {

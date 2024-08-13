@@ -6,18 +6,22 @@ import Divider from '@mui/material/Divider';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../redux/user/userSlice";
+import { login, logout, refreshToken } from "../../redux/user/userSlice";
 
 export default function Layout() {
     const navigate = useNavigate();
     const user = useSelector((state) => state.user)
     const dispatch = useDispatch()
     React.useEffect(() => {
-        console.log(user)
         if (!user.data) {
-            navigate('/')
+            if (!sessionStorage.getItem('login')) {
+                navigate('/')
+            } else {
+                dispatch(refreshToken({token: sessionStorage.getItem('token')}))
+            }
+            
         }
-     }, [user]);
+     }, []);
     
 
    const testMenuItems = [

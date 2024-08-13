@@ -55,7 +55,6 @@ export default function Login() {
 
   React.useEffect(() => {
     if (user.data) {
-        console.log('navigate')
         navigate('/overview')
     } else {
 

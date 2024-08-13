@@ -22,7 +22,6 @@ export default function Shop() {
         dispatch(fetchShopItems());
      }, []);
 
-     console.log(shop)
     const items = shop.items && shop.items.filter(el => el?.category == cat)
   
     const testMenuItems = [

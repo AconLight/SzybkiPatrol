@@ -1,14 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const dev = 'http://localhost:3001'
+const staging = 'https://szybki-patrol-back-5f521e7d73a3.herokuapp.com'
+
+const url = staging
+
 export const login = createAsyncThunk(
   "user/login", 
   async (data) => {
     try {
       const response = await axios({
         method: 'post',
-        //url: "https://szybki-patrol-back-5f521e7d73a3.herokuapp.com/users/login",
-        url: "http://localhost:3001/users/login",
+        url: `${url}/users/login`,
         data: {login: data.login, password: data.password}
     });
       return response.data;
@@ -22,8 +26,7 @@ export const refreshToken = createAsyncThunk(
   async (data) => {
     try {
       const response = await axios.get(
-        //"https://szybki-patrol-back-5f521e7d73a3.herokuapp.com/users/login",
-        `http://localhost:3001/users/refreshToken`,
+        `${url}/users/refreshToken`,
         {
           headers: { Authorization: `Bearer ${data.token + ""}` }
         }
@@ -39,8 +42,7 @@ export const fetchUser = createAsyncThunk(
   async (data) => {
     try {
       const response = await axios.get(
-        //"https://szybki-patrol-back-5f521e7d73a3.herokuapp.com/users/login",
-        `http://localhost:3001/users/user/${data.login}`,
+        `${url}/users/user/${data.login}`,
         {
           headers: { Authorization: `Bearer ${data.token + ""}` }
         }

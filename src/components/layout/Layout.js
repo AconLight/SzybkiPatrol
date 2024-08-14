@@ -7,6 +7,7 @@ import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout, refreshToken } from "../../redux/user/userSlice";
+import track2 from '../../assets/track2.jpg';
 
 export default function Layout() {
     const navigate = useNavigate();
@@ -69,7 +70,12 @@ export default function Layout() {
 
    
    return (
-    <div>
+    <div style={{ 
+        backgroundImage: `url(${track2})`,
+        height: '100vh',
+        backgroundPosition: 'center top',
+        backgroundSize: '100% auto'
+      }}>
         <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                 <SportsScoreIcon />
@@ -82,8 +88,8 @@ export default function Layout() {
             </Avatar>
         </Box>
         <Divider />
-        <Box sx={{display: 'flex', flexDirection: 'row', mt: 15, ml: 15}}>
-            <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
+        <Box sx={{display: 'flex', flexDirection: 'row', mt: 15}}>
+            <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-end', flexGrow: 3, width: '30%', pr: 4}}>
                 {testMenuItems.map(({ href, title }) => (
                     href == '/' ? 
                         <Button
@@ -102,11 +108,12 @@ export default function Layout() {
                         </NavLink>
                             ))}
             </Box>
-            <Box sx={{m: 5}}>
+            <Box sx={{flexGrow: 3, pt: 3, width: '40%'}}>
                 <main className={'flex-1'}>
                     <Outlet />
                 </main>
             </Box>
+            <Box sx={{flexGrow: 4, width: '30%'}}></Box>
        </Box>
     </div>
    );

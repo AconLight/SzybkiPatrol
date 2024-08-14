@@ -6,32 +6,31 @@ const staging = 'https://szybki-patrol-back-5f521e7d73a3.herokuapp.com'
 
 const url = staging
 
-export const fetchShopItems = createAsyncThunk(
-  "shop/fetchItems", 
-  async () => {
+export const fetchUserViewed = createAsyncThunk(
+  "user/fetchUserViewed", 
+  async (data) => {
     try {
       const response = await axios.get(
-        `${url}/items/all`
-      );
+        `${url}/users/userByNick/${data.nick}`,
+    );
       return response.data;
     } catch (error) {
       console.error(error);
     }
 });
 
-export const shopSlice = createSlice({
-    name: 'shop',
+export const raceSlice = createSlice({
+    name: 'race',
     initialState: {
-        items: [],
-        loading: 'idle', // 'idle' | 'pending' | 'succeeded' | 'failed'
+        userViewed: undefined,
     },
     reducers: {
-    },
+    }, 
     extraReducers: (builder) => {
-        builder.addCase(fetchShopItems.fulfilled, (state, action) => {
-            state.items = action.payload
-        })
+        builder.addCase(fetchUserViewed.fulfilled, (state, action) => {
+          state.userViewed = action.payload
+      })
     },
 })
 
-export default shopSlice.reducer
+export default raceSlice.reducer

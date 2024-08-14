@@ -1,10 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const dev = 'http://localhost:3001'
-const staging = 'https://szybki-patrol-back-5f521e7d73a3.herokuapp.com'
-
-const url = staging
+import { url } from "../../config/fetching";
 
 export const fetchShopItems = createAsyncThunk(
   "shop/fetchItems", 

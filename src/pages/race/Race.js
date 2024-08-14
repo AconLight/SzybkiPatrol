@@ -13,8 +13,6 @@ export default function Race() {
 
     const [nick, setNick] = useState("");
 
-    const [fight, setFight] = useState("");
-
     const user = useSelector((state) => state.user)
     React.useEffect(() => {
         if (user?.data?.login) {
@@ -26,6 +24,7 @@ export default function Race() {
      }, []);
 
     const findUserViewed = () => {
+        dispatch(fetchUserViewed({nick: nick}))
         dispatch(fetchUserViewed({nick: nick}))
     }
 
@@ -43,7 +42,9 @@ export default function Race() {
               label="nick przeciwnika"
               name="nick"
               autoFocus
-              onChange={(event) => setNick(event.target.value)}
+              onChange={(event) => {
+                setNick(event.target.value)
+              }}
             />
             <GridedButton
                 title="Szukaj"

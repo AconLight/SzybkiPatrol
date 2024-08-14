@@ -7,6 +7,7 @@ export default configureStore({
   reducer: {
     user: userSlice,
     shop: shopSlice,
-    race: raceSlice,
+    race: raceSlice
   },
 })
+

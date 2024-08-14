@@ -1,10 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { url } from "../../config/fetching";
 
-const dev = 'http://localhost:3001'
-const staging = 'https://szybki-patrol-back-5f521e7d73a3.herokuapp.com'
 
-const url = staging
 
 export const fetchUserViewed = createAsyncThunk(
   "user/fetchUserViewed", 
@@ -24,7 +22,7 @@ export const fightUserViewed = createAsyncThunk(
   async ({userToken, oponentNick}) => {
     try {
       const response = await axios.get(
-        `${url}/race/fight/${oponentNick}/5`,
+        `${url}/race/fight/${oponentNick}/15`,
         {
           headers: { Authorization: `Bearer ${userToken + ""}` }
         }

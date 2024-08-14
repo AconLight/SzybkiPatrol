@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUser } from "../../redux/user/userSlice";
 import { Box, Button, Divider, Grid } from "@mui/material";
+import { formatSeconds } from "../../utils/format";
 
 export default function Overview() {
   
@@ -16,6 +17,9 @@ export default function Overview() {
         }
         
      }, []);
+
+     console.log(user?.data?.timers?.race)
+     console.log(user?.data?.timers?.race)
     
     return (
         <Box sx={{display: 'flex', flexDirection: 'column', width: '100%', alignContent:'stretch', border: 0}}>
@@ -50,7 +54,7 @@ export default function Overview() {
                     następny wyścig:
                 </Grid>
                 <Grid item sx={{border: 2}} xs={6}>
-                    00:01:41
+                    {user?.data?.timers?.race && formatSeconds((Math.max(user?.data?.timers?.race - Date.now() / 1000.0, 0)))}
                 </Grid>
                 <Grid item sx={{border: 2}} xs={12}>
                     brak zespołu:

@@ -72,7 +72,7 @@ export default function Layout() {
    return (
     <div style={{ 
         backgroundImage: `url(${track2})`,
-        height: '100vh',
+        minHeight: '100vh',
         backgroundPosition: 'center top',
         backgroundSize: '100% auto',
         backgroundRepeat: 'repeat'

@@ -21,25 +21,25 @@ export default function UserMediumView({userViewed, onClick}) {
                     armor:
                 </Grid>
                 <Grid item sx={{border: 2}} xs={6}>
-                    {userViewed?.armor} 
+                    {userViewed?.main_stats?.armor} 
                 </Grid>
                 <Grid item sx={{border: 2}} xs={6}>
                     speed:
                 </Grid>
                 <Grid item sx={{border: 2}} xs={6}>
-                    {userViewed?.speed} 
+                    {userViewed?.main_stats?.speed} 
                 </Grid>
                 <Grid item sx={{border: 2}} xs={6}>
                     steering:
                 </Grid>
                 <Grid item sx={{border: 2}} xs={6}>
-                    {userViewed?.steering} 
+                    {userViewed?.main_stats?.steering} 
                 </Grid>
                 <Grid item sx={{border: 2}} xs={6}>
                     attack:
                 </Grid>
                 <Grid item sx={{border: 2}} xs={6}>
-                    {userViewed?.attack} 
+                    {userViewed?.main_stats?.attack} 
                 </Grid>
                 <Grid item sx={{border: 2}} xs={12}>
                     brak zespołu:

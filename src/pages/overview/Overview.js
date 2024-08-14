@@ -64,9 +64,9 @@ export default function Overview() {
                 <Grid item sx={{my: 2}} xs={12}> </Grid>
                 <Grid container spacing={0} sx={{my: 0, bgcolor: 'rgba(200,200,200,.3)'}}>
                     
-                    {user?.data && Object.keys(user?.data).filter(el => el == "speed" || el == "attack" || el == "steering" || el == "armor").map(key => (
+                    {user?.data && Object.keys(user?.data?.main_stats).filter(el => el == "speed" || el == "attack" || el == "steering" || el == "armor").map(key => (
                         <Grid item sx={{border: 2}} xs={6}>
-                            {key}: {user?.data[key]}
+                            {key}: {user?.data?.main_stats[key]}
                         </Grid>
                     ))}
                     <Grid item sx={{border: 2, py: 1}} xs={12}>

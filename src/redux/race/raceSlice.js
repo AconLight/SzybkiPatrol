@@ -19,17 +19,38 @@ export const fetchUserViewed = createAsyncThunk(
     }
 });
 
+export const fightUserViewed = createAsyncThunk(
+  "user/fightUserViewed", 
+  async ({userToken, oponentNick}) => {
+    try {
+      const response = await axios.get(
+        `${url}/race/fight/${oponentNick}/5`,
+        {
+          headers: { Authorization: `Bearer ${userToken + ""}` }
+        }
+    );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+});
+
 export const raceSlice = createSlice({
     name: 'race',
     initialState: {
         userViewed: undefined,
+        fight: undefined
     },
     reducers: {
     }, 
     extraReducers: (builder) => {
-        builder.addCase(fetchUserViewed.fulfilled, (state, action) => {
+      builder.addCase(fetchUserViewed.fulfilled, (state, action) => {
           state.userViewed = action.payload
+          state.fight = undefined
       })
+      builder.addCase(fightUserViewed.fulfilled, (state, action) => {
+          state.fight = action.payload
+    })
     },
 })
 

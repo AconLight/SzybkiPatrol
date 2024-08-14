@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Button, Divider, Grid } from "@mui/material";
 import GridedButton from "../GridedButton";
 
-export default function UserMediumView({userViewed, onClick}) {
+export default function UserMediumView({userViewed}) {
 
 
     return (
@@ -17,29 +17,29 @@ export default function UserMediumView({userViewed, onClick}) {
                 <Grid item sx={{border: 2}} xs={12}>
                      {userViewed?.nick} 
                 </Grid>
-                <Grid item sx={{border: 2}} xs={6}>
+                <Grid item sx={{border: 2}} xs={9}>
                     armor:
                 </Grid>
-                <Grid item sx={{border: 2}} xs={6}>
-                    {userViewed?.main_stats?.armor} 
+                <Grid item sx={{border: 2}} xs={3}>
+                    {userViewed?.mainStats?.armor} 
                 </Grid>
-                <Grid item sx={{border: 2}} xs={6}>
+                <Grid item sx={{border: 2}} xs={9}>
                     speed:
                 </Grid>
-                <Grid item sx={{border: 2}} xs={6}>
-                    {userViewed?.main_stats?.speed} 
+                <Grid item sx={{border: 2}} xs={3}>
+                    {userViewed?.mainStats?.speed} 
                 </Grid>
-                <Grid item sx={{border: 2}} xs={6}>
+                <Grid item sx={{border: 2}} xs={9}>
                     steering:
                 </Grid>
-                <Grid item sx={{border: 2}} xs={6}>
-                    {userViewed?.main_stats?.steering} 
+                <Grid item sx={{border: 2}} xs={3}>
+                    {userViewed?.mainStats?.steering} 
                 </Grid>
-                <Grid item sx={{border: 2}} xs={6}>
+                <Grid item sx={{border: 2}} xs={9}>
                     attack:
                 </Grid>
-                <Grid item sx={{border: 2}} xs={6}>
-                    {userViewed?.main_stats?.attack} 
+                <Grid item sx={{border: 2}} xs={3}>
+                    {userViewed?.mainStats?.attack} 
                 </Grid>
                 <Grid item sx={{border: 2}} xs={12}>
                     brak zespołu:
@@ -48,11 +48,6 @@ export default function UserMediumView({userViewed, onClick}) {
                     coś tam
                 </Grid>
                 </Grid>
-            </Box>
-            <Box>
-                <Grid item sx={{my: 2}} xs={12}> </Grid>
-                <GridedButton title="Wyzwij!" onClick={onClick}/>
-                <Grid item sx={{my: 2}} xs={12}> </Grid>
             </Box>
             </div> ) : ''}
         </Box>

@@ -74,7 +74,8 @@ export default function Layout() {
         backgroundImage: `url(${track2})`,
         height: '100vh',
         backgroundPosition: 'center top',
-        backgroundSize: '100% auto'
+        backgroundSize: '100% auto',
+        backgroundRepeat: 'repeat'
       }}>
         <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

@@ -1,6 +1,6 @@
 import React from "react"
 import { TextField, Grid, Divider } from "@mui/material"
-import GridedButton from "../../components/GridedButton"
+import GridedButton from "../../components/card/GridedButton"
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUser } from "../../redux/user/userSlice";
@@ -8,7 +8,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import TitleCard from "../../components/card/TrainingCardTitle";
+import { startTrening } from "../../redux/trening/treningSlice";
+import CardImgTitle from "../../components/card/CardImgTitle";
+import treningImg from '../../assets/training.jpg';
+import LightedGroup from "../../components/group/LightedGroup";
+import Space from "../../components/group/Space";
 
 export default function Trening() {
 
@@ -17,11 +21,16 @@ export default function Trening() {
         setTime(event.target.value);
       };
 
-    const [isTraning, setIsTrening] = useState(false)
-    
+    const [isTraning, setIsTrening] = useState(false)    
 
     const user = useSelector((state) => state.user)
     const dispatch = useDispatch()
+
+    const start = () => {
+        setIsTrening(true)
+        dispatch(startTrening({userToken: user.data.token, time: time}))
+    }
+
     React.useEffect(() => {
         if (user?.data?.login) {
             dispatch(fetchUser({login: user.data.login, token: user.data.token}))
@@ -34,13 +43,10 @@ export default function Trening() {
   
     return (
         <div>
-            <Grid container sx={{px: 0, border: 0, bgcolor: 'rgba(200,200,200,.06)' }}>
-                <Grid item sx={{border: 0}} xs={12}>
+            <LightedGroup>
 
-            <TitleCard />
-            <Grid container>
-                <Grid item sx={{my: 2}} xs={12}> </Grid>
-            </Grid>
+            <CardImgTitle img={treningImg} title="Trening" description="Rozpocznij trening, aby podszlifować swoje umiejętności oraz zyskać doświadczenie"/>
+            <Space />
             <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Czas treningu</InputLabel>
                 <Select
@@ -64,18 +70,15 @@ export default function Trening() {
                     <MenuItem value={120}>120 min</MenuItem>
                 </Select>
             </FormControl>
-            <Grid container>
-                <Grid item sx={{my: 2}} xs={12}> </Grid>
-            </Grid>
+            <Space />
             <GridedButton
                 title="Trenuj"
-                onClick={(val) => null}
+                onClick={start}
                 buttonProps={{
                     color: canTrain && !isTraning ? 'primary' : 'secondary'
                 }}
             />
-            </Grid>
-            </Grid>
+            </LightedGroup>
         </div>
     )
 }

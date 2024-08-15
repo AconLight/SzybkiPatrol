@@ -4,9 +4,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, Grid, Box } from '@mui/material';
-import training from '../../assets/training.jpg';
+import race from '../../assets/race.jpg';
 
-export default function TrainingCardTitle() {
+export default function CardImgTitle({img, title, description}) {
   return (
     <Card sx={{ }}>
       <CardActionArea sx={{display: 'flex', flexDirection: 'row'}}>
@@ -14,15 +14,15 @@ export default function TrainingCardTitle() {
           sx={{width: '62%'}}
           component="img"
           height="100"
-          image={training}
+          image={img}
           alt="green iguana"
         />
         <CardContent sx={{width: '50%'}}>
           <Typography gutterBottom variant="h5" component="div">
-            Trening
+            {title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Rozpocznij trening, aby podszlifować swoje umiejętności oraz zyskać doświadczenie
+            {description}
           </Typography>
         </CardContent>
       </CardActionArea>

@@ -5,7 +5,7 @@ import { url } from "../../config/fetching";
 
 
 export const fetchUserViewed = createAsyncThunk(
-  "user/fetchUserViewed", 
+  "race/fetchUserViewed", 
   async (data) => {
     try {
       const response = await axios.get(
@@ -18,7 +18,7 @@ export const fetchUserViewed = createAsyncThunk(
 });
 
 export const fightUserViewed = createAsyncThunk(
-  "user/fightUserViewed", 
+  "race/fightUserViewed", 
   async ({userToken, oponentNick}) => {
     try {
       const response = await axios.get(

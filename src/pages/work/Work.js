@@ -1,6 +1,6 @@
 import React from "react"
 import { TextField, Grid, Divider } from "@mui/material"
-import GridedButton from "../../components/GridedButton"
+import GridedButton from "../../components/card/GridedButton"
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUser } from "../../redux/user/userSlice";
@@ -8,8 +8,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import TitleCard from "../../components/card/TrainingCardTitle";
-import WorkCardTitle from "../../components/card/WorkCardTitle";
+import { startWork } from "../../redux/work/workSlice";
+import CardImgTitle from "../../components/card/CardImgTitle";
+import workImg from '../../assets/work.jpg';
+import LightedGroup from "../../components/group/LightedGroup";
+import Space from "../../components/group/Space";
 
 export default function Work() {
 
@@ -23,6 +26,12 @@ export default function Work() {
 
     const user = useSelector((state) => state.user)
     const dispatch = useDispatch()
+
+    const start = () => {
+        setIsTrening(true)
+        dispatch(startWork({userToken: user.data.token, time: time*1}))
+    }
+
     React.useEffect(() => {
         if (user?.data?.login) {
             dispatch(fetchUser({login: user.data.login, token: user.data.token}))
@@ -35,13 +44,10 @@ export default function Work() {
   
     return (
         <div>
-            <Grid container sx={{px: 0, border: 0, bgcolor: 'rgba(200,200,200,.06)' }}>
-                <Grid item sx={{border: 0}} xs={12}>
+            <LightedGroup>
 
-            <WorkCardTitle />
-            <Grid container>
-                <Grid item sx={{my: 2}} xs={12}> </Grid>
-            </Grid>
+            <CardImgTitle img={workImg} title="Praca" description="Idź do pracy jako mechanik, żeby zarobić trochę pieniędzy"/>
+            <Space />
             <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Czas treningu</InputLabel>
                 <Select
@@ -62,18 +68,15 @@ export default function Work() {
 
                 </Select>
             </FormControl>
-            <Grid container>
-                <Grid item sx={{my: 2}} xs={12}> </Grid>
-            </Grid>
+            <Space />
             <GridedButton
                 title="Trenuj"
-                onClick={(val) => null}
+                onClick={start}
                 buttonProps={{
                     color: canTrain && !isTraning ? 'primary' : 'secondary'
                 }}
             />
-            </Grid>
-            </Grid>
+            </LightedGroup>
         </div>
     )
 }

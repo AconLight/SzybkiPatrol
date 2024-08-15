@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import UserMediumView from "../../components/user/UserMediumView";
+import UserMediumView from "../../components/card/UserMediumView";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserViewed, fightUserViewed } from "../../redux/race/raceSlice";
 import { Button, Divider, TextField, Grid, Box, Typography } from '@mui/material';
-import GridedButton from '../../components/GridedButton';
+import GridedButton from '../../components/card/GridedButton';
 import { fetchUser } from '../../redux/user/userSlice';
 import { formatSeconds } from '../../utils/format';
+import CardImgTitle from '../../components/card/CardImgTitle';
+import raceImg from '../../assets/race.jpg';
+import LightedGroup from '../../components/group/LightedGroup';
+import Space from '../../components/group/Space';
 
 export default function Race() {
 
@@ -39,9 +43,11 @@ export default function Race() {
     const canRace = user?.data?.timers?.race < Date.now() / 1000.0
   
     return (
-        <div>
+        <LightedGroup>
+            <CardImgTitle img={raceImg} title="Wyścig" description="Wyzwij innego gracza na pojedynek"/>
+            <Space />
             <TextField
-              margin="normal"
+              //margin="normal"
               required
               fullWidth
               id="nick"
@@ -51,6 +57,7 @@ export default function Race() {
               onChange={(event) => {
                 setNick(event.target.value)
               }}
+              sx={{pb:2}}
             />
             <GridedButton
                 title="Szukaj"
@@ -59,17 +66,15 @@ export default function Race() {
                     color: canRace && !isFight ? 'primary' : 'secondary'
                 }}
             />
-            <Grid container>
-                <Grid item sx={{my: 2}} xs={12}> </Grid>
-            </Grid>
-            <Divider />
-            <Grid container>
-                <Grid item sx={{my: 2}} xs={12}> </Grid>
-            </Grid>
-            <UserMediumView userViewed={!race?.fight && nick == race?.userViewed?.nick  && race?.userViewed} />
+            {!race?.fight && nick == race?.userViewed?.nick  && race?.userViewed &&
+            <div>
+                <Space />
+                <UserMediumView userViewed={race?.userViewed} />
+            </div>}
+                
             {!race?.fight && nick == race?.userViewed?.nick  &&(
             <Box>
-                <Grid item sx={{my: 2}} xs={12}> </Grid>
+                <Space />
                 {!canRace ? (
                     <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                         <Box><Typography><strong>Zacznij wyścig za {formatSeconds((Math.max(user?.data?.timers?.race - Date.now() / 1000.0, 0)))}</strong></Typography></Box>
@@ -77,20 +82,24 @@ export default function Race() {
                 ) : (
                     <GridedButton title="Wyzwij!" onClick={fightOponent}/>
                 )}
-                <Grid item sx={{my: 2}} xs={12}> </Grid>
+                <Space />
             </Box>
             )}
             {race?.fight && (
-                <Grid container sx={{px: 0, border: 0, bgcolor: 'rgba(200,200,200,.3)' }}>
-                    <Grid item sx={{border: 2}} xs={6}>
-                        <UserMediumView userViewed={user?.data} />
+                <div><Space size={1} />
+                <LightedGroup>
+                    
+                    <Grid item sx={{px: 1, border: 0}} xs={12}>
+                        <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                            <UserMediumView userViewed={user?.data} />
+                            <Divider sx={{
+                                "&::before, &::after": {
+                                    borderColor: "#444444",
+                                }, width: '10%', mx: 1}}>VS</Divider>
+                            <UserMediumView userViewed={race?.userViewed} />
+                        </Box>
                     </Grid>
-                    <Grid item sx={{border: 2}} xs={6}>
-                        <UserMediumView userViewed={race?.userViewed} />
-                    </Grid>
-                    <Grid container>
-                        <Grid item sx={{my: 2}} xs={12}> </Grid>
-                    </Grid>
+                    <Space />
                     <Grid item sx={{border: 0, pb: 2}} xs={12}>
                         <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                             <Box><Typography><strong>przebieg walki</strong></Typography></Box>
@@ -99,25 +108,28 @@ export default function Race() {
                     
                     {race?.fight && race.fight.map(el => (
                         <Grid item sx={{border: 0}} xs={12}>
-                            <Grid item sx={{border: 1}} xs={12}>
-                                {user?.data?.nick} zadaje graczowi {race?.userViewed?.nick} {parseInt(el.dmg1)} punktów obrażeń.
+                            <Divider /><Divider />
+                            <Grid item sx={{border: 0}} xs={12}>
+                                <center>{user?.data?.nick} zadaje graczowi {race?.userViewed?.nick} {parseInt(el.dmg1)} punktów obrażeń.</center>
                             </Grid>
-                            <Grid item sx={{border: 1}} xs={12}>
-                                {race?.userViewed?.nick} zadaje graczowi {user?.data?.nick} {parseInt(el.dmg2)} punktów obrażeń.
+                            <Divider sx={{mx:8}} />
+                            <Grid item sx={{border: 0}} xs={12}>
+                                <center>{race?.userViewed?.nick} zadaje graczowi {user?.data?.nick} {parseInt(el.dmg2)} punktów obrażeń.</center>
                             </Grid>
-                            <Grid item sx={{border: 1}} xs={12}>
+                            <Divider sx={{mx:8}} />
+                            <Grid item sx={{border: 0}} xs={12}>
                                 {el.overtake == 1 && (
-                                    <div>{user?.data?.nick} wyprzedza {race?.userViewed?.nick}</div>
+                                    <center>{user?.data?.nick} wyprzedza {race?.userViewed?.nick}</center>
                                 )}
                                 {el.overtake == -1 && (
-                                    <div>{race?.userViewed?.nick} wyprzedza gracza {user?.data?.nick}</div>
+                                    <center>{race?.userViewed?.nick} wyprzedza gracza {user?.data?.nick}</center>
                                 )}
                             </Grid>
                         </Grid>
                         ))}
-                </Grid>
+                </LightedGroup></div>
             )}
 
-        </div>
+        </LightedGroup>
     )
 }

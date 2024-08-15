@@ -89,7 +89,7 @@ export default function Layout() {
             </Avatar>
         </Box>
         <Divider />
-        <Box sx={{display: 'flex', flexDirection: 'row', mt: 15}}>
+        <Box sx={{display: 'flex', flexDirection: 'row', mt: 8}}>
             <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-end', flexGrow: 3, width: '30%', pr: 4}}>
                 <Paper sx={{width: 250, pt: 4, pb: 15}}>
                 {testMenuItems.map(({ href, title }) => (

@@ -11,20 +11,25 @@ import Item from '../../components/card/Item';
 import inventoryImg from '../../assets/inventory.jpg'
 import LightedGroup from '../../components/group/LightedGroup';
 import Space from '../../components/group/Space';
+import { fetchUserItems } from '../../redux/inventory/inventorySlice';
 
 
 
 export default function Inventory() {
 
-    const shop = useSelector((state) => state.shop)
+    const inventory = useSelector((state) => state.inventory)
     const dispatch = useDispatch()
-
-    
-    React.useEffect(() => {
-        dispatch(fetchShopItems());
+    const user = useSelector((state) => state.user)
+     React.useEffect(() => {
+        if (user?.data?.login) {
+            dispatch(fetchUserItems({token: user.data.token}))
+        } else {
+            dispatch(fetchUserItems({token: sessionStorage.getItem('token')}))
+        }
+        
      }, []);
 
-    const items = shop.items
+    const items = inventory.items || []
 
 
 

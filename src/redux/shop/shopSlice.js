@@ -15,6 +15,23 @@ export const fetchShopItems = createAsyncThunk(
     }
 });
 
+export const buyItem = createAsyncThunk(
+  "shop/buyItem", 
+  async ({token, itemName}) => {
+    try {
+      const response = await axios.put(
+        `${url}/items/addItem/${itemName}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token + ""}` }
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+});
+
 export const shopSlice = createSlice({
     name: 'shop',
     initialState: {
@@ -27,6 +44,8 @@ export const shopSlice = createSlice({
         builder.addCase(fetchShopItems.fulfilled, (state, action) => {
             state.items = action.payload
         })
+        builder.addCase(buyItem.fulfilled, (state, action) => {
+      })
     },
 })
 

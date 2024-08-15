@@ -3,11 +3,12 @@ import { Box, Button, Divider } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchShopItems } from '../../redux/shop/shopSlice';
+import { buyItem, fetchShopItems } from '../../redux/shop/shopSlice';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import Item from '../../components/card/Item';
 import LightedGroup from '../../components/group/LightedGroup';
+import { fetchUser } from '../../redux/user/userSlice';
 
 
 
@@ -17,11 +18,21 @@ export default function Shop() {
     const { cat } = useParams()
 
     const shop = useSelector((state) => state.shop)
+    const user = useSelector((state) => state.user)
     const dispatch = useDispatch()
 
+    const buyItemHandle = (token, itemName) => {
+        console.log(shop.items[0].Nazwa)
+        dispatch(buyItem({token, itemName}))
+    }
     
     React.useEffect(() => {
         dispatch(fetchShopItems());
+        if (user?.data?.login) {
+            dispatch(fetchUser({login: user.data.login, token: user.data.token}))
+        } else {
+            dispatch(fetchUser({login: sessionStorage.getItem('login'), token: sessionStorage.getItem('token')}))
+        }
      }, []);
 
     const items = shop.items && shop.items.filter(el => el?.category == cat)
@@ -76,7 +87,7 @@ export default function Shop() {
             <ImageList cols={1} sx={{width: '100%'}}>
                 {items.map((item, idx) => (
                     <ImageListItem sx={{py:2}} key={idx}>
-                        <Item item={item} canBuy={true} />
+                        <Item item={item} canBuy={true} onClick={() => buyItemHandle(user?.data?.token, item?.Nazwa)} />
                     </ImageListItem>
                 ))}
             </ImageList>

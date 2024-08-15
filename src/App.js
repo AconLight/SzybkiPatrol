@@ -12,6 +12,7 @@ import Premium from "./pages/premium/Premium"
 import Ranking from "./pages/ranking/Ranking"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import getPalette from "./utils/theme"
+import Inventory from "./pages/inventory/Inventory"
 
 function App() {
   const theme = createTheme({
@@ -31,6 +32,7 @@ function App() {
            <Route path="race" element={<Race />} />
            <Route path="work" element={<Work />} />
            <Route path="team" element={<Team />} />
+           <Route path="inventory" element={<Inventory />} />
            <Route path="premium" element={<Premium />} />
            <Route path="ranking" element={<Ranking />} />
          </Route>

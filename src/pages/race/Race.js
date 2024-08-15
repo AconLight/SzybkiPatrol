@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import UserMediumView from "../../components/card/UserMediumView";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserViewed, fightUserViewed } from "../../redux/race/raceSlice";
-import { Button, Divider, TextField, Grid, Box, Typography } from '@mui/material';
+import { Button, Divider, TextField, Grid, Box, Typography, styled } from '@mui/material';
 import GridedButton from '../../components/card/GridedButton';
 import { fetchUser } from '../../redux/user/userSlice';
 import { formatSeconds } from '../../utils/format';
@@ -10,6 +10,18 @@ import CardImgTitle from '../../components/card/CardImgTitle';
 import raceImg from '../../assets/race.jpg';
 import LightedGroup from '../../components/group/LightedGroup';
 import Space from '../../components/group/Space';
+import Timer from '../../components/smart/Timer';
+
+const StyledTextField = styled(TextField)`
+  & label.Mui-focused {
+    color: white;
+  }
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: white;
+    }
+  }
+`;
 
 export default function Race() {
 
@@ -39,21 +51,26 @@ export default function Race() {
         dispatch(fightUserViewed({userToken: user.data.token, oponentNick: nick}))
     }
     
+    const maxTimestamp = Math.max(
+        user?.data?.timers?.work, 
+        user?.data?.timers?.race,
+        user?.data?.timers?.trening,
+        0
+    )
     
-    const canRace = user?.data?.timers?.race < Date.now() / 1000.0
+    const canRace = maxTimestamp < Date.now() / 1000.0 
   
     return (
         <LightedGroup>
-            <CardImgTitle img={raceImg} title="Wyścig" description="Wyzwij innego gracza na pojedynek"/>
+            <CardImgTitle isMain={true} img={raceImg} title="Wyścig" description="Wyzwij innego gracza na pojedynek"/>
             <Space />
-            <TextField
+            <StyledTextField
               //margin="normal"
               required
               fullWidth
               id="nick"
               label="nick przeciwnika"
               name="nick"
-              autoFocus
               onChange={(event) => {
                 setNick(event.target.value)
               }}
@@ -77,7 +94,7 @@ export default function Race() {
                 <Space />
                 {!canRace ? (
                     <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                        <Box><Typography><strong>Zacznij wyścig za {formatSeconds((Math.max(user?.data?.timers?.race - Date.now() / 1000.0, 0)))}</strong></Typography></Box>
+                        <Box><Typography><strong>Zacznij wyścig za <Timer timestampSec={maxTimestamp} /></strong></Typography></Box>
                     </Box>
                 ) : (
                     <GridedButton title="Wyzwij!" onClick={fightOponent}/>

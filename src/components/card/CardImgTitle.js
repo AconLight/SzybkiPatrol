@@ -3,15 +3,17 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, Grid, Box } from '@mui/material';
-import race from '../../assets/race.jpg';
+import { CardActionArea, Grid, Box, Divider } from '@mui/material';
+import Space from '../group/Space';
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 
-export default function CardImgTitle({img, title, description}) {
+export default function CardImgTitle({img, title, description, isMain}) {
   return (
-    <Card sx={{ }}>
+    <Box>
+      <Card sx={{borderBottom: isMain ? 0 : 0 }}>
       <CardActionArea sx={{display: 'flex', flexDirection: 'row'}}>
         <CardMedia
-          sx={{width: '62%'}}
+          sx={{width: isMain ? '62%' : '38%'}}
           component="img"
           height="100"
           image={img}
@@ -27,5 +29,19 @@ export default function CardImgTitle({img, title, description}) {
         </CardContent>
       </CardActionArea>
     </Card>
+    {isMain && (
+      <Box sx={{p: 0, display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+        <KeyboardDoubleArrowDownIcon />
+        <KeyboardDoubleArrowDownIcon />
+        <KeyboardDoubleArrowDownIcon />
+        <KeyboardDoubleArrowDownIcon />
+        <KeyboardDoubleArrowDownIcon />
+        <KeyboardDoubleArrowDownIcon />
+        <KeyboardDoubleArrowDownIcon />
+        <KeyboardDoubleArrowDownIcon />
+        <KeyboardDoubleArrowDownIcon />
+      </Box>
+      )}
+    </Box>
   );
 }

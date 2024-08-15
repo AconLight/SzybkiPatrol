@@ -1,5 +1,5 @@
 import React from "react"
-import { TextField, Grid, Divider } from "@mui/material"
+import { TextField, Grid, Divider, Box, Typography } from "@mui/material"
 import GridedButton from "../../components/card/GridedButton"
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux";
@@ -13,6 +13,7 @@ import CardImgTitle from "../../components/card/CardImgTitle";
 import treningImg from '../../assets/training.jpg';
 import LightedGroup from "../../components/group/LightedGroup";
 import Space from "../../components/group/Space";
+import Timer from "../../components/smart/Timer";
 
 export default function Trening() {
 
@@ -39,13 +40,19 @@ export default function Trening() {
         }
      }, []);
 
-     const canTrain = user?.data?.timers?.trening < Date.now() / 1000.0
+     const maxTimestamp = Math.max(
+        user?.data?.timers?.work, 
+        user?.data?.timers?.trening,
+        0
+    )
+    
+    const canTrain = maxTimestamp < Date.now() / 1000.0  && !isTraning
   
     return (
         <div>
             <LightedGroup>
 
-            <CardImgTitle img={treningImg} title="Trening" description="Rozpocznij trening, aby podszlifować swoje umiejętności oraz zyskać doświadczenie"/>
+            <CardImgTitle isMain={true} img={treningImg} title="Trening" description="Rozpocznij trening, aby podszlifować swoje umiejętności oraz zyskać doświadczenie"/>
             <Space />
             <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Czas treningu</InputLabel>
@@ -75,9 +82,19 @@ export default function Trening() {
                 title="Trenuj"
                 onClick={start}
                 buttonProps={{
-                    color: canTrain && !isTraning ? 'primary' : 'secondary'
+                    color: canTrain ? 'primary' : 'secondary'
                 }}
             />
+            <Box>
+                {!canTrain && (
+                    <div><Space />
+                    <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                        <Box><Typography><strong>Zacznij trening za <Timer timestampSec={maxTimestamp} /></strong></Typography></Box>
+                    </Box>
+                    <Space /></div>
+                )}
+            </Box>
+
             </LightedGroup>
         </div>
     )

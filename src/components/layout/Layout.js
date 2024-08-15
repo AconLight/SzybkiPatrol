@@ -31,14 +31,6 @@ export default function Layout() {
            title: 'podgląd',
        },
        {
-           href: 'chat',
-           title: 'wiadomości',
-       },
-       {
-           href: 'shop',
-           title: 'sklep tuningowy',
-       },
-       {
             href: 'trening',
             title: 'trening',
         },
@@ -51,8 +43,20 @@ export default function Layout() {
             title: 'praca',
         },
         {
+            href: 'shop',
+            title: 'sklep tuningowy',
+        },
+        {
+            href: 'inventory',
+            title: 'wyposażenie',
+         },
+        {
             href: 'team',
             title: 'zespół',
+        },
+        {
+            href: 'chat',
+            title: 'wiadomości',
         },
         {
             href: 'premium',

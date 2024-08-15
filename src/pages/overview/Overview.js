@@ -6,6 +6,7 @@ import { formatSeconds } from "../../utils/format";
 import UserMediumView from "../../components/card/UserMediumView";
 import Space from "../../components/group/Space";
 import LightedGroup from "../../components/group/LightedGroup";
+import Timer from "../../components/smart/Timer";
 
 export default function Overview() {
   
@@ -68,15 +69,15 @@ export default function Overview() {
             <UserMediumView userViewed={user.data} onTuning={true}/>
             <Box>
                 <Space />
-                <Grid container spacing={0} sx={{my: 0, bgcolor: 'rgba(200,200,200,.3)'}}>
+                <Grid container spacing={0} sx={{borderRadius: 1, border: 1, my: 0, bgcolor: 'rgba(200,200,200,.3)'}}>
                     {user?.data?.stats && Object.keys(user?.data?.stats).map(key => (
                         key !== 'exp' ? (
-                        <Grid item sx={{border: 2}} xs={6}>
+                        <Grid item sx={{pl:1, border: 2}} xs={6}>
                             <div style={{fontWeight: 'bold'}}>{key}: {user?.data?.stats[key]}</div>
                         </Grid>) : (
                         <Grid item sx={{border: 2, display: 'flex', flexDirection: 'row'}} xs={6}>
                             <Box sx={{width: `${user?.data?.stats.exp / user?.data?.stats.lvl}%`, bgcolor: 'rgba(200,200,0,.6)'}}>
-                                <div style={{fontWeight: 'bold', position: 'absolute'}}>{key}: {user?.data?.stats[key]}</div>
+                                <div style={{paddingLeft: '8px', fontWeight: 'bold', position: 'absolute'}}>{key}: {user?.data?.stats[key]}</div>
                             </Box>
                             <Box display="flex" justifyContent="flex-end" sx={{alignTex: 'right', width: `${100 - user?.data?.stats.exp / user?.data?.stats.lvl}%`, bgcolor: 'rgba(80,80,80,.6)'}}>
                                 <div style={{fontWeight: 'bold', position: 'absolute'}}>/ {user?.data?.stats.lvl*100}</div>
@@ -88,21 +89,21 @@ export default function Overview() {
                 </Grid>
                 <Space />
                 <Grid container spacing={0} sx={{borderRadius: 1, border: 1, my: 0, bgcolor: 'rgba(200,200,200,.3)'}}>    
-                    <Grid item sx={{pl:1, border: 2}} xs={12}>
-                        <b>timery</b>
+                    <Grid item sx={{pl:1, border: 2}} xs={6}>
+                        <b>praca: <Timer timestampSec = {user?.data?.timers?.work}/></b>
                     </Grid>
-                    <Grid item sx={{border: 2}} xs={6}>
-                        <b>praca/trening:</b>
+                    <Grid item sx={{pl:1, border: 2}} xs={6}>
+                        <b>trening: <Timer timestampSec = {user?.data?.timers?.trening}/></b>
                     </Grid>
-                    <Grid item sx={{border: 2}} xs={6}>
-                       <b>wyścig:</b> 
+                    <Grid item sx={{pl:1, border: 2}} xs={6}>
+                       <b>wyścig: <Timer timestampSec = {user?.data?.timers?.race}/></b>
+                    </Grid>
+                    <Grid item sx={{pl:1, border: 2}} xs={6}>
+                       
                     </Grid>
                 </Grid>
                 <Space />
                 <Grid container spacing={0} sx={{borderRadius: 1, border: 1, my: 0, bgcolor: 'rgba(200,200,200,.3)'}}>    
-                    <Grid item sx={{pl:1, border: 2}} xs={12}>
-                    <b>statystyki</b>
-                    </Grid>
                     <Grid item sx={{border: 2}} xs={6}>
                     <b>łączny czas gry:</b>
                     </Grid>

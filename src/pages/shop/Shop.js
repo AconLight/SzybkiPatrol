@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { fetchShopItems } from '../../redux/shop/shopSlice';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import Item from '../../components/card/Item';
+import LightedGroup from '../../components/group/LightedGroup';
 
 
 
@@ -70,19 +72,15 @@ export default function Shop() {
             </Box>
             <Box>{cat}</Box>
             <Divider />
-            <ImageList cols={1} sx={{width: '40%'}}>
+            <LightedGroup>
+            <ImageList cols={1} sx={{width: '100%'}}>
                 {items.map((item, idx) => (
-                    <Box sx={{p: 2, boxShadow: 5}}>
-                    {Object.keys(item).filter(el => el != "_id" && el != "imgUrl").map(key => (<Box>{key}: {item[key]}</Box>))}
-                        <ImageListItem key={idx}>
-                        <img
-                            src={item.imgUrl}
-                            alt="asd"
-                        />
-                        </ImageListItem>
-                    </Box>
+                    <ImageListItem sx={{py:2}} key={idx}>
+                        <Item item={item} canBuy={true} />
+                    </ImageListItem>
                 ))}
             </ImageList>
+            </LightedGroup>
         </Box>
     )
 }

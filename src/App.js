@@ -10,9 +10,15 @@ import Work from "./pages/work/Work"
 import Team from "./pages/team/Team"
 import Premium from "./pages/premium/Premium"
 import Ranking from "./pages/ranking/Ranking"
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import getPalette from "./utils/theme"
 
 function App() {
+  const theme = createTheme({
+    palette: getPalette(),
+  });
  return (
+    <ThemeProvider theme={theme}>
      <BrowserRouter>
        <Routes>
          <Route path="/" element={<Login />} />
@@ -30,6 +36,7 @@ function App() {
          </Route>
        </Routes>
      </BrowserRouter>
+    </ThemeProvider>
  )
 }
 

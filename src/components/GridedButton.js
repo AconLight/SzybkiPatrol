@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button, Divider, Grid } from "@mui/material";
 
-export default function GridedButton({title, onClick}) {
+export default function GridedButton({title, onClick, buttonProps}) {
 
 
     return (
@@ -13,6 +13,7 @@ export default function GridedButton({title, onClick}) {
                             variant="contained"
                             sx={{ px: 8}}
                             onClick={onClick}
+                            {...buttonProps}
                             >
                             {title}
                         </Button>

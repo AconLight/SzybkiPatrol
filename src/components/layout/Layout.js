@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Paper } from "@mui/material";
 import { NavLink, Outlet } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import Divider from '@mui/material/Divider';
@@ -91,6 +91,7 @@ export default function Layout() {
         <Divider />
         <Box sx={{display: 'flex', flexDirection: 'row', mt: 15}}>
             <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-end', flexGrow: 3, width: '30%', pr: 4}}>
+                <Paper sx={{width: 250, pt: 4, pb: 15}}>
                 {testMenuItems.map(({ href, title }) => (
                     href == '/' ? 
                         <Button
@@ -108,6 +109,7 @@ export default function Layout() {
                             </Button>
                         </NavLink>
                             ))}
+                </Paper>
             </Box>
             <Box sx={{flexGrow: 3, pt: 3, width: '40%'}}>
                 <main className={'flex-1'}>

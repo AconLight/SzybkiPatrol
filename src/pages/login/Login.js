@@ -16,6 +16,8 @@ import track from '../../assets/track.jpg';
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { lime, purple } from '@mui/material/colors';
+import getPalette from '../../utils/theme';
 
 
 function Copyright(props) {
@@ -33,10 +35,16 @@ function Copyright(props) {
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
+const theme2 = createTheme({
+  palette: {
+    primary: lime,
+    secondary: purple,
+  },
+});
 
-defaultTheme.palette.primary.main = '#482736'
-defaultTheme.palette.primary.dark = '#512a33'
+const theme = createTheme({
+  palette: getPalette(),
+});
 
 export default function Login() {
   const user = useSelector((state) => state.user)
@@ -68,7 +76,7 @@ export default function Login() {
       backgroundPosition: 'center top',
       backgroundSize: '100% auto'
     }}>
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

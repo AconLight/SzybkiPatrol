@@ -5,6 +5,7 @@ import { fetchUserViewed, fightUserViewed } from "../../redux/race/raceSlice";
 import { Button, Divider, TextField, Grid, Box, Typography } from '@mui/material';
 import GridedButton from '../../components/GridedButton';
 import { fetchUser } from '../../redux/user/userSlice';
+import { formatSeconds } from '../../utils/format';
 
 export default function Race() {
 
@@ -12,6 +13,7 @@ export default function Race() {
     const dispatch = useDispatch()
 
     const [nick, setNick] = useState("");
+    const [isFight, setIsFight] = useState(false)
 
     const user = useSelector((state) => state.user)
     React.useEffect(() => {
@@ -29,8 +31,12 @@ export default function Race() {
     }
 
     const fightOponent = () => {
+        setIsFight(true)
         dispatch(fightUserViewed({userToken: user.data.token, oponentNick: nick}))
     }
+    
+    
+    const canRace = user?.data?.timers?.race < Date.now() / 1000.0
   
     return (
         <div>
@@ -49,6 +55,9 @@ export default function Race() {
             <GridedButton
                 title="Szukaj"
                 onClick={(val) => findUserViewed()}
+                buttonProps={{
+                    color: canRace && !isFight ? 'primary' : 'secondary'
+                }}
             />
             <Grid container>
                 <Grid item sx={{my: 2}} xs={12}> </Grid>
@@ -61,7 +70,13 @@ export default function Race() {
             {!race?.fight && nick == race?.userViewed?.nick  &&(
             <Box>
                 <Grid item sx={{my: 2}} xs={12}> </Grid>
-                <GridedButton title="Wyzwij!" onClick={fightOponent}/>
+                {!canRace ? (
+                    <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                        <Box><Typography><strong>Zacznij wyścig za {formatSeconds((Math.max(user?.data?.timers?.race - Date.now() / 1000.0, 0)))}</strong></Typography></Box>
+                    </Box>
+                ) : (
+                    <GridedButton title="Wyzwij!" onClick={fightOponent}/>
+                )}
                 <Grid item sx={{my: 2}} xs={12}> </Grid>
             </Box>
             )}

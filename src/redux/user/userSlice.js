@@ -50,6 +50,23 @@ export const fetchUser = createAsyncThunk(
     }
 });
 
+export const incUserStat = createAsyncThunk(
+  "user/incUserStat", 
+  async ({userToken, statName}) => {
+    try {
+      const response = await axios.post(
+        `${url}/users/incStat/${statName}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${userToken + ""}` }
+        }
+    );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+});
+
 export const userSlice = createSlice({
     name: 'user',
     initialState: {

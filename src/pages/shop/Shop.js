@@ -22,7 +22,6 @@ export default function Shop() {
     const dispatch = useDispatch()
 
     const buyItemHandle = (token, itemName) => {
-        console.log(shop.items[0].Nazwa)
         dispatch(buyItem({token, itemName}))
     }
     
@@ -87,7 +86,7 @@ export default function Shop() {
             <ImageList cols={1} sx={{width: '100%'}}>
                 {items.map((item, idx) => (
                     <ImageListItem sx={{py:2}} key={idx}>
-                        <Item item={item} canBuy={true} onClick={() => buyItemHandle(user?.data?.token, item?.Nazwa)} />
+                        <Item item={item} canBuy={true} onClick={() => buyItemHandle(user?.data?.token, item?.name)} />
                     </ImageListItem>
                 ))}
             </ImageList>

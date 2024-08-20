@@ -18,8 +18,8 @@ export default function UserMediumView({userViewed, onTuning, incStat}) {
             {userViewed ? ( <div>
             <Box sx={{borderRadius: 1, display: 'flex', flexDirection: 'row', border: 1, borderColor}}>
                 <Box sx={{maxWidth: '50%', border: 1, bgcolor: 'rgba(200,200,200,.2)', borderColor}}>
-                    viper
-                    <img src="https://i.ibb.co/jH6TWLV/bugv2.png" alt="asd"/>
+                    {userViewed?.car?.name}
+                    <img src={userViewed?.car?.url} alt="asd"/>
                 </Box>
                 <Grid container sx={{px: 0, border: 1, bgcolor: 'rgba(200,200,200,.3)', borderColor }}>
                 <Grid item sx={{borderBottom: 1}} xs={12}>

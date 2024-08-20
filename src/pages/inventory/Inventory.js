@@ -12,6 +12,7 @@ import inventoryImg from '../../assets/inventory.jpg'
 import LightedGroup from '../../components/group/LightedGroup';
 import Space from '../../components/group/Space';
 import { fetchUserItems } from '../../redux/inventory/inventorySlice';
+import { activateItem } from '../../redux/user/userSlice';
 
 
 
@@ -29,9 +30,13 @@ export default function Inventory() {
         
      }, []);
 
+    const activateUserItem = (itemId) => {
+        dispatch(activateItem({userToken: user.data.token, itemId}))
+    }
+
     const items = inventory.items || []
 
-
+    console.log(items)
 
     return (
         <LightedGroup>
@@ -40,7 +45,7 @@ export default function Inventory() {
             <ImageList cols={1} sx={{width: '100%'}}>
                 {items.map((item, idx) => (
                     <ImageListItem sx={{py:2}} key={idx}>
-                        <Item item={item} canBuy={false} />
+                        <Item item={item} buttonTitle={item.isEquiped ? 'dezaktywuj': 'aktywuj'} onClick={!item.isEquiped ? () => activateUserItem(item._id) : undefined} />
                     </ImageListItem>
                 ))}
             </ImageList>

@@ -55,7 +55,7 @@ export default function Work() {
             <CardImgTitle isMain={true} img={workImg} title="Praca" description="Idź do pracy jako mechanik, żeby zarobić trochę pieniędzy"/>
             <Space />
             <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Czas treningu</InputLabel>
+            <InputLabel id="demo-simple-select-label">Czas pracy</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -86,7 +86,7 @@ export default function Work() {
                 {!canWork && (
                     <div><Space />
                     <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                        <Box><Typography><strong>Zacznij trening za <Timer timestampSec={maxTimestamp} /></strong></Typography></Box>
+                        <Box><Typography><strong>Zacznij pracę za <Timer timestampSec={maxTimestamp} /></strong></Typography></Box>
                     </Box>
                     <Space /></div>
                 )}

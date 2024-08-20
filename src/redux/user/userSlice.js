@@ -67,6 +67,23 @@ export const incUserStat = createAsyncThunk(
     }
 });
 
+export const activateItem = createAsyncThunk(
+  "user/activateItem", 
+  async ({userToken, itemId}) => {
+    try {
+      const response = await axios.post(
+        `${url}/users/activateItem/${itemId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${userToken + ""}` }
+        }
+    );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+});
+
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
@@ -89,6 +106,9 @@ export const userSlice = createSlice({
             state.data = action.payload
             state.data.token = token
         })
+        builder.addCase(activateItem.fulfilled, (state, action) => {
+
+      })
         builder.addCase(refreshToken.fulfilled, (state, action) => {
             state.data = action.payload
       })

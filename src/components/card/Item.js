@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Button, Divider, Grid } from "@mui/material";
 import CardImgTitle from "./CardImgTitle";
 
-export default function Item({item, canBuy, onClick}) {
+export default function Item({item, buttonTitle, onClick}) {
 
     return (
         <CardImgTitle img={item.imgUrl} description={
@@ -14,7 +14,7 @@ export default function Item({item, canBuy, onClick}) {
                     onClick={onClick}
                     variant="contained"
                     sx={{ mx: 3, my: 1 }}>
-                    {canBuy ? 'kup' : 'posiadane'}
+                    {buttonTitle}
                 </Button>
             </div>
             } />

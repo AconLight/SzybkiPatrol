@@ -142,6 +142,21 @@ export default function Race() {
                                     <center>{race?.userViewed?.nick} wyprzedza gracza {user?.data?.nick}</center>
                                 )}
                             </Grid>
+                            <Divider sx={{mx:8}} />
+                            <Grid item sx={{border: 0}} xs={12}>
+                                {el.events1.map(event1 => (
+                                    <div><Divider sx={{mx:8}} />
+                                    <Grid item sx={{border: 0}} xs={12}>
+                                        <center>{event1?.description.replaceAll("<player2>", user?.data?.nick).replaceAll("<player1>", race?.userViewed?.nick)}</center>
+                                    </Grid></div>
+                                ))}
+                                {el.events2.map(event2 => (
+                                    <div><Divider sx={{mx:8}} />
+                                    <Grid item sx={{border: 0}} xs={12}>
+                                        <center>{event2?.description.replaceAll("<player2>", user?.data?.nick).replaceAll("<player1>", race?.userViewed?.nick)}</center>
+                                    </Grid></div>
+                                ))}
+                            </Grid>
                         </Grid>
                         ))}
                 </LightedGroup></div>

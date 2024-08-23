@@ -147,7 +147,7 @@ export default function Race() {
                                 {el.events1.map(event1 => (
                                     <div><Divider sx={{mx:8}} />
                                     <Grid item sx={{border: 0}} xs={12}>
-                                        <center>{event1?.description.replaceAll("<player2>", user?.data?.nick).replaceAll("<player1>", race?.userViewed?.nick)}</center>
+                                        <center>{event1?.description.replaceAll("<player1>", user?.data?.nick).replaceAll("<player2>", race?.userViewed?.nick)}</center>
                                     </Grid></div>
                                 ))}
                                 {el.events2.map(event2 => (

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchUser, incUserStat } from "../../redux/user/userSlice";
+import { fetchUser, incUserStat, userRepair } from "../../redux/user/userSlice";
 import { Box, Button, Divider, Grid } from "@mui/material";
 import { formatSeconds } from "../../utils/format";
 import UserMediumView from "../../components/card/UserMediumView";
@@ -18,6 +18,10 @@ export default function Overview() {
         dispatch(incUserStat({userToken: user.data.token, statName}))
     }
 
+    const handleUserRepair = (statName) => {
+        dispatch(userRepair({userToken: user.data.token}))
+    }
+
     React.useEffect(() => {
         if (user?.data?.login) {
             dispatch(fetchUser({login: user.data.login, token: user.data.token}))
@@ -30,7 +34,7 @@ export default function Overview() {
     return (
         <LightedGroup>
         <Box sx={{display: 'flex', flexDirection: 'column', width: '100%', alignContent:'stretch', border: 0}}>
-            <UserMediumView userViewed={user.data} onTuning={true} incStat={userIncStat}/>
+            <UserMediumView userViewed={user.data} onTuning={true} incStat={userIncStat} handleRepair={handleUserRepair}/>
             <Box>
                 <Space />
                 <Grid container spacing={0} sx={{borderRadius: 1, border: 1, my: 0, bgcolor: 'rgba(200,200,200,.3)'}}>

@@ -67,6 +67,23 @@ export const incUserStat = createAsyncThunk(
     }
 });
 
+export const userRepair = createAsyncThunk(
+  "user/userRepair", 
+  async ({userToken}) => {
+    try {
+      const response = await axios.post(
+        `${url}/users/userRepair`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${userToken + ""}` }
+        }
+    );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+});
+
 export const activateItem = createAsyncThunk(
   "user/activateItem", 
   async ({userToken, itemId}) => {
@@ -107,6 +124,9 @@ export const userSlice = createSlice({
             state.data.token = token
         })
         builder.addCase(activateItem.fulfilled, (state, action) => {
+
+      })
+      builder.addCase(userRepair.fulfilled, (state, action) => {
 
       })
         builder.addCase(refreshToken.fulfilled, (state, action) => {

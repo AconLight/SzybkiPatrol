@@ -3,7 +3,7 @@ import { Box, Button, Divider, Grid, IconButton } from "@mui/material";
 import GridedButton from "./GridedButton";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
-export default function UserMediumView({userViewed, onTuning, incStat}) {
+export default function UserMediumView({userViewed, onTuning, incStat, handleRepair}) {
 
     const borderColor = 'background.default'
 
@@ -22,9 +22,19 @@ export default function UserMediumView({userViewed, onTuning, incStat}) {
                     <img src={userViewed?.car?.url} alt="asd"/>
                 </Box>
                 <Grid container sx={{px: 0, border: 1, bgcolor: 'rgba(200,200,200,.3)', borderColor }}>
-                <Grid item sx={{borderBottom: 1}} xs={12}>
+                <Grid item sx={{borderBottom: 2}} xs={12}>
                      {userViewed?.nick}
                 </Grid>
+                <Grid item sx={{borderBottom: 1, display: 'flex', flexDirection: 'row'}} xs={12}>
+                    <Box sx={{width: `${userViewed?.mainStats?.hp / 1000 * 100}%`, bgcolor: 'rgba(200,0,0,.6)'}}>
+                        <span style={{fontWeight: 'bold'}}>{'hp'}: {userViewed?.mainStats?.hp}<div style={{paddingLeft: '8px', fontWeight: 'bold', position: 'absolute'}}></div></span>
+                    </Box>
+                    <Box display="flex" justifyContent="flex-end" sx={{alignTex: 'right', width: `${100 - userViewed?.mainStats?.hp / 1000 *100}%`, bgcolor: 'rgba(80,80,80,.6)'}}>
+                        <div style={{fontWeight: 'bold', position: 'absolute'}}>/ 1000</div>
+                    </Box>
+                    
+                </Grid>
+
                 <Grid item sx={{border: 1, borderRight: 2, borderLeft: 0, borderColor}} xs={leftSize}>
                     armor:
                 </Grid>
@@ -57,6 +67,13 @@ export default function UserMediumView({userViewed, onTuning, incStat}) {
                         sx={{ px: 4, mr: 2}}
                         >
                         tuning
+                    </Button>
+                    <Button
+                        onClick={handleRepair}
+                        variant="contained"
+                        sx={{ px: 4, mr: 2}}
+                        >
+                        naprawa
                     </Button>
                     </Box>
                 )}

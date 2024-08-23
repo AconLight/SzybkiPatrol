@@ -123,7 +123,7 @@ export default function Race() {
                         </Box>
                     </Grid>
                     
-                    {race?.fight && race.fight.map(el => (
+                    {race?.fight && race.fight.turns.map(el => (
                         <Grid item sx={{border: 0}} xs={12}>
                             <Divider /><Divider />
                             <Grid item sx={{border: 0}} xs={12}>

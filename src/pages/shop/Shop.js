@@ -48,15 +48,25 @@ export default function Shop() {
         //     cat: "paintwork"
         // },
         {
-            href: '/shop/tires',
-            title: 'opony',
-            cat: "tire"
+            href: '/shop/bodyworks',
+            title: 'karoseria',
+            cat: "bodyworks"
         },
         {
-            href: '/shop/engines',
-            title: 'silniki',
-            cat: "engine"
+            href: '/shop/weapons',
+            title: 'uzbrojenie',
+            cat: "weapons"
         },
+        // {
+        //     href: '/shop/tires',
+        //     title: 'opony',
+        //     cat: "tire"
+        // },
+        // {
+        //     href: '/shop/engines',
+        //     title: 'silniki',
+        //     cat: "engine"
+        // },
         // {
         //     href: '/shop/addons',
         //     title: 'dodatki',

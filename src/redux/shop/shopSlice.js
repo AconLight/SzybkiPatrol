@@ -17,13 +17,13 @@ export const fetchShopItems = createAsyncThunk(
 
 export const buyItem = createAsyncThunk(
   "shop/buyItem", 
-  async ({token, itemName}) => {
+  async ({itemName}) => {
     try {
       const response = await axios.put(
         `${url}/items/addItem/${itemName}`,
         {},
         {
-          headers: { Authorization: `Bearer ${token + ""}` }
+          headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
         }
       );
       return response.data;

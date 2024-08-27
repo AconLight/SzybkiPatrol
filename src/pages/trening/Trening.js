@@ -8,7 +8,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { startTrening } from "../../redux/trening/treningSlice";
+import { startTrening } from "../../redux/user/userSlice";
 import CardImgTitle from "../../components/card/CardImgTitle";
 import treningImg from '../../assets/training.jpg';
 import LightedGroup from "../../components/group/LightedGroup";
@@ -29,15 +29,11 @@ export default function Trening() {
 
     const start = () => {
         setIsTrening(true)
-        dispatch(startTrening({userToken: user.data.token, time: time}))
+        dispatch(startTrening({time: time}))
     }
 
     React.useEffect(() => {
-        if (user?.data?.login) {
-            dispatch(fetchUser({login: user.data.login, token: user.data.token}))
-        } else {
-            dispatch(fetchUser({login: sessionStorage.getItem('login'), token: sessionStorage.getItem('token')}))
-        }
+        dispatch(fetchUser({login: sessionStorage.getItem('login'), token: sessionStorage.getItem('token')}))
      }, []);
 
      const maxTimestamp = Math.max(
@@ -63,18 +59,18 @@ export default function Trening() {
                     label="Age"
                     onChange={handleChange}
                 >
-                    <MenuItem value={10}>10 min</MenuItem>
-                    <MenuItem value={20}>20 min</MenuItem>
-                    <MenuItem value={30}>30 min</MenuItem>
-                    <MenuItem value={40}>40 min</MenuItem>
-                    <MenuItem value={50}>50 min</MenuItem>
-                    <MenuItem value={60}>60 min</MenuItem>
-                    <MenuItem value={70}>70 min</MenuItem>
-                    <MenuItem value={80}>80 min</MenuItem>
-                    <MenuItem value={90}>90 min</MenuItem>
-                    <MenuItem value={100}>100 min</MenuItem>
-                    <MenuItem value={110}>110 min</MenuItem>
-                    <MenuItem value={120}>120 min</MenuItem>
+                    <MenuItem value={1}>10 min</MenuItem>
+                    <MenuItem value={2}>20 min</MenuItem>
+                    <MenuItem value={3}>30 min</MenuItem>
+                    <MenuItem value={4}>40 min</MenuItem>
+                    <MenuItem value={5}>50 min</MenuItem>
+                    <MenuItem value={6}>60 min</MenuItem>
+                    <MenuItem value={7}>70 min</MenuItem>
+                    <MenuItem value={8}>80 min</MenuItem>
+                    <MenuItem value={9}>90 min</MenuItem>
+                    <MenuItem value={10}>100 min</MenuItem>
+                    <MenuItem value={11}>110 min</MenuItem>
+                    <MenuItem value={12}>120 min</MenuItem>
                 </Select>
             </FormControl>
             <Space />

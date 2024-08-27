@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { url } from "../../config/fetching";
+import _ from "lodash"
 
 export const login = createAsyncThunk(
   "user/login", 
@@ -52,13 +53,13 @@ export const fetchUser = createAsyncThunk(
 
 export const incUserStat = createAsyncThunk(
   "user/incUserStat", 
-  async ({userToken, statName}) => {
+  async ({statName}) => {
     try {
       const response = await axios.post(
         `${url}/users/incStat/${statName}`,
         {},
         {
-          headers: { Authorization: `Bearer ${userToken + ""}` }
+          headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
         }
     );
       return response.data;
@@ -69,13 +70,45 @@ export const incUserStat = createAsyncThunk(
 
 export const userRepair = createAsyncThunk(
   "user/userRepair", 
-  async ({userToken}) => {
+  async () => {
     try {
       const response = await axios.post(
         `${url}/users/userRepair`,
         {},
         {
-          headers: { Authorization: `Bearer ${userToken + ""}` }
+          headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
+        }
+    );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+});
+
+export const startWork = createAsyncThunk(
+  "work/startwork", 
+  async ({time}) => {
+    try {
+      const response = await axios.get(
+        `${url}/work/work/${time}`,
+        {
+          headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
+        }
+    );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+});
+
+export const startTrening = createAsyncThunk(
+  "trening/startTrening", 
+  async ({time}) => {
+    try {
+      const response = await axios.get(
+        `${url}/trening/trening/${time}`,
+        {
+          headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
         }
     );
       return response.data;
@@ -86,13 +119,13 @@ export const userRepair = createAsyncThunk(
 
 export const activateItem = createAsyncThunk(
   "user/activateItem", 
-  async ({userToken, itemId}) => {
+  async ({itemId}) => {
     try {
       const response = await axios.post(
         `${url}/users/activateItem/${itemId}`,
         {},
         {
-          headers: { Authorization: `Bearer ${userToken + ""}` }
+          headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
         }
     );
       return response.data;
@@ -104,7 +137,9 @@ export const activateItem = createAsyncThunk(
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
-        data: undefined,
+        data: {
+          user: undefined
+        },
     },
     reducers: {
       logout: (state) => {
@@ -118,20 +153,42 @@ export const userSlice = createSlice({
             sessionStorage.setItem("login", action.payload.login);
             sessionStorage.setItem("token", action.payload.token);
         })
+
         builder.addCase(fetchUser.fulfilled, (state, action) => {
             const token = state.data.token
-            state.data = action.payload
+            state.data = action.payload || {}
             state.data.token = token
         })
         builder.addCase(activateItem.fulfilled, (state, action) => {
-
-      })
-      builder.addCase(userRepair.fulfilled, (state, action) => {
-
-      })
+          const newState = _.cloneDeep(state)
+          newState.data.items = action.payload.user.items
+          return newState
+        })
+        builder.addCase(startWork.fulfilled, (state, action) => {
+          const newState = _.cloneDeep(state)
+          newState.data.timers = action.payload?.user?.timers
+          return newState
+        })
+        builder.addCase(startTrening.fulfilled, (state, action) => {
+          const newState = _.cloneDeep(state)
+          newState.data.timers = action.payload?.user?.timers
+          return newState
+        })
+        builder.addCase(userRepair.fulfilled, (state, action) => {
+          const newState = _.cloneDeep(state)
+          newState.data.mainStats = action.payload.user.mainStats
+          newState.data.stats = action.payload.user.stats
+          return newState
+        })
+        builder.addCase(incUserStat.fulfilled, (state, action) => {
+          const newState = _.cloneDeep(state)
+          newState.data.mainStats = action.payload.user.mainStats
+          newState.data.stats = action.payload.user.stats
+          return newState
+        })
         builder.addCase(refreshToken.fulfilled, (state, action) => {
             state.data = action.payload
-      })
+        })
     },
 })
 

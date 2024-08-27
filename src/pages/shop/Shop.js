@@ -22,16 +22,12 @@ export default function Shop() {
     const dispatch = useDispatch()
 
     const buyItemHandle = (token, itemName) => {
-        dispatch(buyItem({token, itemName}))
+        dispatch(buyItem({itemName}))
     }
     
     React.useEffect(() => {
         dispatch(fetchShopItems());
-        if (user?.data?.login) {
-            dispatch(fetchUser({login: user.data.login, token: user.data.token}))
-        } else {
-            dispatch(fetchUser({login: sessionStorage.getItem('login'), token: sessionStorage.getItem('token')}))
-        }
+        dispatch(fetchUser({login: sessionStorage.getItem('login'), token: sessionStorage.getItem('token')}))
      }, []);
 
     const items = shop.items && shop.items.filter(el => el?.category == cat)

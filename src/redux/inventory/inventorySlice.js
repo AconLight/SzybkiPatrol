@@ -4,12 +4,12 @@ import { url } from "../../config/fetching";
 
 export const fetchUserItems = createAsyncThunk(
   "user/userItems", 
-  async ({token}) => {
+  async () => {
     try {
       const response = await axios.get(
         `${url}/items/userItems`,
         {
-          headers: { Authorization: `Bearer ${token + ""}` }
+          headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
         }
       );
       return response.data;

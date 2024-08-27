@@ -33,12 +33,7 @@ export default function Race() {
 
     const user = useSelector((state) => state.user)
     React.useEffect(() => {
-        if (user?.data?.login) {
-            dispatch(fetchUser({login: user.data.login, token: user.data.token}))
-        } else {
-            dispatch(fetchUser({login: sessionStorage.getItem('login'), token: sessionStorage.getItem('token')}))
-        }
-        
+        dispatch(fetchUser({login: sessionStorage.getItem('login'), token: sessionStorage.getItem('token')}))
      }, []);
 
     const findUserViewed = () => {
@@ -48,7 +43,7 @@ export default function Race() {
 
     const fightOponent = () => {
         setIsFight(true)
-        dispatch(fightUserViewed({userToken: user.data.token, oponentNick: nick}))
+        dispatch(fightUserViewed({oponentNick: nick}))
     }
     
     const maxTimestamp = Math.max(

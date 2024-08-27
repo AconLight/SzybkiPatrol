@@ -15,20 +15,15 @@ export default function Overview() {
     const dispatch = useDispatch()
 
     const userIncStat = (statName) => {
-        dispatch(incUserStat({userToken: user.data.token, statName}))
+        dispatch(incUserStat({statName}))
     }
 
     const handleUserRepair = (statName) => {
-        dispatch(userRepair({userToken: user.data.token}))
+        dispatch(userRepair())
     }
 
     React.useEffect(() => {
-        if (user?.data?.login) {
-            dispatch(fetchUser({login: user.data.login, token: user.data.token}))
-        } else {
-            dispatch(fetchUser({login: sessionStorage.getItem('login'), token: sessionStorage.getItem('token')}))
-        }
-        
+        dispatch(fetchUser({login: sessionStorage.getItem('login'), token: sessionStorage.getItem('token')}))   
      }, []);
     
     return (

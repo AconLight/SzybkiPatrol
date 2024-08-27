@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { url } from "../../config/fetching";
-
+import _ from "lodash"
 
 
 export const fetchUserViewed = createAsyncThunk(
@@ -19,12 +19,12 @@ export const fetchUserViewed = createAsyncThunk(
 
 export const fightUserViewed = createAsyncThunk(
   "race/fightUserViewed", 
-  async ({userToken, oponentNick}) => {
+  async ({oponentNick}) => {
     try {
       const response = await axios.get(
         `${url}/race/fight/${oponentNick}/15`,
         {
-          headers: { Authorization: `Bearer ${userToken + ""}` }
+          headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
         }
     );
       return response.data;
@@ -37,7 +37,8 @@ export const raceSlice = createSlice({
     name: 'race',
     initialState: {
         userViewed: undefined,
-        fight: undefined
+        fight: undefined,
+        data: {}
     },
     reducers: {
     }, 
@@ -47,7 +48,10 @@ export const raceSlice = createSlice({
           state.fight = undefined
       })
       builder.addCase(fightUserViewed.fulfilled, (state, action) => {
-          state.fight = action.payload
+          const newState = _.cloneDeep(state)
+          newState.data.timers = action.payload?.user?.timers || {}
+          newState.fight = action.payload.fight
+          return newState
     })
     },
 })

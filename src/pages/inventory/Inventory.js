@@ -31,7 +31,7 @@ export default function Inventory() {
      }, []);
 
     const activateUserItem = (itemId) => {
-        dispatch(activateItem({userToken: user.data.token, itemId}))
+        dispatch(activateItem({itemId}))
     }
 
     const items = inventory.items || []

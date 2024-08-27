@@ -8,7 +8,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { startWork } from "../../redux/work/workSlice";
+import { startWork } from "../../redux/user/userSlice";
 import CardImgTitle from "../../components/card/CardImgTitle";
 import workImg from '../../assets/work.jpg';
 import LightedGroup from "../../components/group/LightedGroup";
@@ -30,20 +30,18 @@ export default function Work() {
 
     const start = () => {
         setIsWorking(true)
-        dispatch(startWork({userToken: user.data.token, time: time*1})) // *60
+        dispatch(startWork({time: time*1})) // *60
     }
 
     React.useEffect(() => {
-        if (user?.data?.login) {
-            dispatch(fetchUser({login: user.data.login, token: user.data.token}))
-        } else {
-            dispatch(fetchUser({login: sessionStorage.getItem('login'), token: sessionStorage.getItem('token')}))
-        }
+        dispatch(fetchUser({login: sessionStorage.getItem('login'), token: sessionStorage.getItem('token')}))
      }, []);
 
+    const timers = user?.data?.timers
+
     const maxTimestamp = Math.max(
-        user?.data?.timers?.work, 
-        user?.data?.timers?.trening,
+        timers?.work,
+        timers?.trening,
         0
     )
     

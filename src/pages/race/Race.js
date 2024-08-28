@@ -52,6 +52,8 @@ export default function Race() {
         user?.data?.timers?.trening,
         0
     )
+
+    console.log(race)
     
     const canRace = maxTimestamp < Date.now() / 1000.0 
   
@@ -154,6 +156,20 @@ export default function Race() {
                             </Grid>
                         </Grid>
                         ))}
+                    {race?.result && (
+                        <Grid item sx={{border: 0}} xs={12}>
+                            <Divider /><Divider />
+                            <Grid item sx={{border: 0}} xs={12}>
+                                <center>{race.result.description.replaceAll("<player1>", user?.data?.nick).replaceAll("<player2>", race?.userViewed?.nick)}</center>
+                            </Grid>
+                            <Divider /><Divider />
+                            <Grid item sx={{border: 0}} xs={12}>
+                                <center>Wygrywa gracz {race.result.winner.replaceAll("<player1>", user?.data?.nick).replaceAll("<player2>", race?.userViewed?.nick)}
+                                    {" "}zyskując {race.result.exp} doświadczenia i {race.result.money} dolarów.</center>
+                            </Grid>
+
+                        </Grid>
+                    )}
                 </LightedGroup></div>
             )}
 

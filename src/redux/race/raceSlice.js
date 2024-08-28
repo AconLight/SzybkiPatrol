@@ -38,6 +38,7 @@ export const raceSlice = createSlice({
     initialState: {
         userViewed: undefined,
         fight: undefined,
+        result: undefined,
         data: {},
         user: {}
     },
@@ -54,6 +55,7 @@ export const raceSlice = createSlice({
           newState.data.timers = action.payload?.user?.timers || {}
           newState.fight = action.payload.fight
           newState.userViewed = action.payload.oponent
+          newState.result = action.payload.result
           return newState
     })
     },

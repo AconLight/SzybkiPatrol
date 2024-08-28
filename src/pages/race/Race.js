@@ -103,7 +103,7 @@ export default function Race() {
                     
                     <Grid item sx={{px: 1, border: 0}} xs={12}>
                         <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                            <UserMediumView userViewed={user?.data} />
+                            <UserMediumView userViewed={race?.user || user?.data} />
                             <Divider sx={{
                                 "&::before, &::after": {
                                     borderColor: "#444444",

@@ -38,7 +38,8 @@ export const raceSlice = createSlice({
     initialState: {
         userViewed: undefined,
         fight: undefined,
-        data: {}
+        data: {},
+        user: {}
     },
     reducers: {
     }, 
@@ -49,8 +50,10 @@ export const raceSlice = createSlice({
       })
       builder.addCase(fightUserViewed.fulfilled, (state, action) => {
           const newState = _.cloneDeep(state)
+          newState.user = action.payload.user
           newState.data.timers = action.payload?.user?.timers || {}
           newState.fight = action.payload.fight
+          newState.userViewed = action.payload.oponent
           return newState
     })
     },

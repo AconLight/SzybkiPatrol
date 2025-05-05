@@ -1,4 +1,4 @@
 const dev = 'http://localhost:3001'
-const staging = 'https://szybki-patrol-back-5f521e7d73a3.herokuapp.com'
+const staging = 'https://szybkipatrolback.onrender.com'
 
 export const url = staging

@@ -1,24 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUser, incUserStat, userRepair } from "../../redux/user/userSlice";
-import { Box, Button, Divider, Grid } from "@mui/material";
+import { Box, Button, Divider, Grid, IconButton } from "@mui/material";
 import { formatSeconds } from "../../utils/format";
 import UserMediumView from "../../components/card/UserMediumView";
+import StatWithBar from "../../components/box/StatWithBar";
 import Space from "../../components/group/Space";
 import LightedGroup from "../../components/group/LightedGroup";
 import Timer from "../../components/smart/Timer";
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 export default function Overview() {
-  
 
+    const borderColor = 'background.default'
+
+    const [isTuning, setIsTuning] = useState(false)
+
+    const toggleTuning = () => setIsTuning(!isTuning)
+
+    const leftSize = isTuning ? 7 : 9
+  
+    const onTuning = true
     const user = useSelector((state) => state.user)
     const dispatch = useDispatch()
 
-    const userIncStat = (statName) => {
+    const incStat = (statName) => {
         dispatch(incUserStat({statName}))
     }
 
-    const handleUserRepair = (statName) => {
+    const handleRepair = (statName) => {
         dispatch(userRepair())
     }
 
@@ -29,44 +39,41 @@ export default function Overview() {
     return (
         <LightedGroup>
         <Box sx={{display: 'flex', flexDirection: 'column', width: '100%', alignContent:'stretch', border: 0}}>
-            <UserMediumView userViewed={user.data} onTuning={true} incStat={userIncStat} handleRepair={handleUserRepair}/>
+            <UserMediumView userViewed={user.data} onTuning={true} incStat={incStat} handleRepair={handleRepair} toggleTuning={toggleTuning}/>
             <Box>
                 <Space />
                 <Grid container spacing={0} sx={{borderRadius: 1, border: 1, my: 0, bgcolor: 'rgba(200,200,200,.3)'}}>
-                    {user?.data?.stats && Object.keys(user?.data?.stats).map(key => (
-                        key !== 'exp' ? (
-                        <Grid item sx={{pl:1, border: 2}} xs={6}>
-                            <div style={{fontWeight: 'bold'}}>{key}: {user?.data?.stats[key]}</div>
-                        </Grid>) : (
-                        <Grid item sx={{border: 2, display: 'flex', flexDirection: 'row'}} xs={6}>
-                            <Box sx={{width: `${user?.data?.stats.exp / user?.data?.stats.lvl}%`, bgcolor: 'rgba(200,200,0,.6)'}}>
-                                <div style={{paddingLeft: '8px', fontWeight: 'bold', position: 'absolute'}}>{key}: {user?.data?.stats[key]}</div>
-                            </Box>
-                            <Box display="flex" justifyContent="flex-end" sx={{alignTex: 'right', width: `${100 - user?.data?.stats.exp / user?.data?.stats.lvl}%`, bgcolor: 'rgba(80,80,80,.6)'}}>
-                                <div style={{fontWeight: 'bold', position: 'absolute'}}>/ {user?.data?.stats.lvl*100}</div>
-                            </Box>
-                            
+                    {user?.data?.stats && ["attack", "speed", "steering", "armor"].map(key => (
+                        <Grid item sx={{border: 1, display: 'flex', flexDirection: 'row'}} xs={12}>
+                            <StatWithBar
+                                color={'rgba(23, 200, 0, 0.6)'}
+                                statName={key} value={user?.data?.mainStats[key]}
+                                maxValue={100}
+                                content={isTuning && <span><IconButton size="small"><AddBoxIcon onClick={() => incStat(key)} /></IconButton> $100 </span>} />
                         </Grid>
                         )
-                    ))}
+                    )}
                 </Grid>
+                {onTuning && (
+                    <Box textAlign='center' sx={{py: 1, width: '100%'}}>
+                    <Button
+                        onClick={toggleTuning}
+                        variant="contained"
+                        sx={{ px: 4, mr: 2}}
+                        >
+                        tuning
+                    </Button>
+                    <Button
+                        onClick={handleRepair}
+                        variant="contained"
+                        sx={{ px: 4, mr: 2}}
+                        >
+                        naprawa
+                    </Button>
+                    </Box>
+                )}
                 <Space />
-                <Grid container spacing={0} sx={{borderRadius: 1, border: 1, my: 0, bgcolor: 'rgba(200,200,200,.3)'}}>    
-                    <Grid item sx={{pl:1, border: 2}} xs={6}>
-                        <b>praca: <Timer timestampSec = {user?.data?.timers?.work}/></b>
-                    </Grid>
-                    <Grid item sx={{pl:1, border: 2}} xs={6}>
-                        <b>trening: <Timer timestampSec = {user?.data?.timers?.trening}/></b>
-                    </Grid>
-                    <Grid item sx={{pl:1, border: 2}} xs={6}>
-                       <b>wyścig: <Timer timestampSec = {user?.data?.timers?.race}/></b>
-                    </Grid>
-                    <Grid item sx={{pl:1, border: 2}} xs={6}>
-                       
-                    </Grid>
-                </Grid>
-                <Space />
-                <Grid container spacing={0} sx={{borderRadius: 1, border: 1, my: 0, bgcolor: 'rgba(200,200,200,.3)'}}>    
+                {/* <Grid container spacing={0} sx={{borderRadius: 1, border: 1, my: 0, bgcolor: 'rgba(200,200,200,.3)'}}>    
                     <Grid item sx={{border: 2}} xs={6}>
                     <b>łączny czas gry:</b>
                     </Grid>
@@ -79,7 +86,7 @@ export default function Overview() {
                     <Grid item sx={{border: 2}} xs={6}>
                     <b>423</b>
                     </Grid>
-                </Grid>
+                </Grid> */}
             </Box>
         </Box>
         </LightedGroup>

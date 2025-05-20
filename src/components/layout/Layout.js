@@ -7,7 +7,7 @@ import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout, refreshToken } from "../../redux/user/userSlice";
-import track2 from '../../assets/track2.jpg';
+import track2 from '../../assets/track_logged.webp';
 
 export default function Layout() {
     const navigate = useNavigate();

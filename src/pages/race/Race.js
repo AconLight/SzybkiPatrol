@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
-import UserMediumView from "../../components/card/UserMediumView";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserViewed, fightUserViewed } from "../../redux/race/raceSlice";
-import { Button, Divider, TextField, Grid, Box, Typography, styled } from '@mui/material';
-import GridedButton from '../../components/card/GridedButton';
+import { Button, TextField, Box, Typography, styled } from '@mui/material';
 import { fetchUser } from '../../redux/user/userSlice';
-import { formatSeconds } from '../../utils/format';
-import CardImgTitle from '../../components/card/CardImgTitle';
-import raceImg from '../../assets/race.jpg';
-import LightedGroup from '../../components/group/LightedGroup';
-import Space from '../../components/group/Space';
+import UserMediumView from "../../components/card/UserMediumView";
+import ActionCard from '../../components/card/ActionCard';
 import Timer from '../../components/smart/Timer';
 
 const StyledTextField = styled(TextField)`
@@ -24,20 +19,17 @@ const StyledTextField = styled(TextField)`
 `;
 
 export default function Race() {
-
-    const race = useSelector((state) => state.race)
-    const dispatch = useDispatch()
-
     const [nick, setNick] = useState("");
     const [isFight, setIsFight] = useState(false)
-
+    const race = useSelector((state) => state.race)
     const user = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+
     React.useEffect(() => {
         dispatch(fetchUser({login: sessionStorage.getItem('login'), token: sessionStorage.getItem('token')}))
-     }, []);
+    }, []);
 
     const findUserViewed = () => {
-        dispatch(fetchUserViewed({nick: nick}))
         dispatch(fetchUserViewed({nick: nick}))
     }
 
@@ -49,130 +41,79 @@ export default function Race() {
     const maxTimestamp = Math.max(
         user?.data?.timers?.work, 
         user?.data?.timers?.race,
-        user?.data?.timers?.trening,
-        0
-    )
+        user?.data?.timers?.trening
+    );
 
-    console.log(race)
-    
-    const canRace = maxTimestamp < Date.now() / 1000.0 
-  
     return (
-        <LightedGroup>
-            <CardImgTitle isMain={true} img={raceImg} title="Wyścig" description="Wyzwij innego gracza na pojedynek"/>
-            <Space />
-            <StyledTextField
-              //margin="normal"
-              required
-              fullWidth
-              id="nick"
-              label="nick przeciwnika"
-              name="nick"
-              onChange={(event) => {
-                setNick(event.target.value)
-              }}
-              sx={{pb:2}}
-            />
-            <GridedButton
-                title="Szukaj"
-                onClick={(val) => findUserViewed()}
-                buttonProps={{
-                    color: canRace && !isFight ? 'primary' : 'secondary'
-                }}
-            />
-            {!race?.fight && nick == race?.userViewed?.nick  && race?.userViewed &&
-            <div>
-                <Space />
-                <UserMediumView userViewed={race?.userViewed} />
-            </div>}
-                
-            {!race?.fight && nick == race?.userViewed?.nick  &&(
-            <Box>
-                <Space />
-                {!canRace ? (
-                    <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                        <Box><Typography><strong>Zacznij wyścig za <Timer timestampSec={maxTimestamp} /></strong></Typography></Box>
+        <Box sx={{
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: 3,
+            padding: 2,
+            background: 'linear-gradient(180deg, rgba(20,20,20,0.95) 0%, rgba(15,15,15,0.98) 100%)',
+            minHeight: '100vh'
+        }}>
+            <ActionCard
+                title="Find Your Opponent"
+                description="Enter nickname to find and challenge other racers"
+                actionContent={
+                    <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                        <StyledTextField
+                            label="Nickname"
+                            variant="outlined"
+                            size="small"
+                            value={nick}
+                            onChange={(e) => setNick(e.target.value)}
+                            sx={{ 
+                                input: { color: 'white' },
+                                label: { color: 'rgba(255,255,255,0.7)' }
+                            }}
+                        />
+                        <Button
+                            onClick={findUserViewed}
+                            variant="contained"
+                            sx={{
+                                background: 'linear-gradient(45deg, rgba(50,50,50,0.9) 30%, rgba(70,70,70,0.9) 90%)',
+                                '&:hover': {
+                                    background: 'linear-gradient(45deg, rgba(70,70,70,0.9) 30%, rgba(90,90,90,0.9) 90%)',
+                                }
+                            }}>
+                            Find
+                        </Button>
                     </Box>
-                ) : (
-                    <GridedButton title="Wyzwij!" onClick={fightOponent}/>
-                )}
-                <Space />
-            </Box>
-            )}
-            {race?.fight && (
-                <div><Space size={1} />
-                <LightedGroup>
-                    
-                    <Grid item sx={{px: 1, border: 0}} xs={12}>
-                        <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                            <UserMediumView userViewed={race?.user || user?.data} />
-                            <Divider sx={{
-                                "&::before, &::after": {
-                                    borderColor: "#444444",
-                                }, width: '10%', mx: 1}}>VS</Divider>
-                            <UserMediumView userViewed={race?.userViewed} />
-                        </Box>
-                    </Grid>
-                    <Space />
-                    <Grid item sx={{border: 0, pb: 2}} xs={12}>
-                        <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                            <Box><Typography><strong>przebieg walki</strong></Typography></Box>
-                        </Box>
-                    </Grid>
-                    
-                    {race?.fight && race.fight.turns.map(el => (
-                        <Grid item sx={{border: 0}} xs={12}>
-                            <Divider /><Divider />
-                            <Grid item sx={{border: 0}} xs={12}>
-                                <center>{user?.data?.nick} zadaje graczowi {race?.userViewed?.nick} {parseInt(el.dmg1)} punktów obrażeń.</center>
-                            </Grid>
-                            <Divider sx={{mx:8}} />
-                            <Grid item sx={{border: 0}} xs={12}>
-                                <center>{race?.userViewed?.nick} zadaje graczowi {user?.data?.nick} {parseInt(el.dmg2)} punktów obrażeń.</center>
-                            </Grid>
-                            <Divider sx={{mx:8}} />
-                            <Grid item sx={{border: 0}} xs={12}>
-                                {el.overtake == 1 && (
-                                    <center>{user?.data?.nick} wyprzedza {race?.userViewed?.nick}</center>
-                                )}
-                                {el.overtake == -1 && (
-                                    <center>{race?.userViewed?.nick} wyprzedza gracza {user?.data?.nick}</center>
-                                )}
-                            </Grid>
-                            <Divider sx={{mx:8}} />
-                            <Grid item sx={{border: 0}} xs={12}>
-                                {el.events1.map(event1 => (
-                                    <div><Divider sx={{mx:8}} />
-                                    <Grid item sx={{border: 0}} xs={12}>
-                                        <center>{event1?.description.replaceAll("<player1>", user?.data?.nick).replaceAll("<player2>", race?.userViewed?.nick)}</center>
-                                    </Grid></div>
-                                ))}
-                                {el.events2.map(event2 => (
-                                    <div><Divider sx={{mx:8}} />
-                                    <Grid item sx={{border: 0}} xs={12}>
-                                        <center>{event2?.description.replaceAll("<player2>", user?.data?.nick).replaceAll("<player1>", race?.userViewed?.nick)}</center>
-                                    </Grid></div>
-                                ))}
-                            </Grid>
-                        </Grid>
-                        ))}
-                    {race?.result && (
-                        <Grid item sx={{border: 0}} xs={12}>
-                            <Divider /><Divider />
-                            <Grid item sx={{border: 0}} xs={12}>
-                                <center>{race.result.description.replaceAll("<player1>", user?.data?.nick).replaceAll("<player2>", race?.userViewed?.nick)}</center>
-                            </Grid>
-                            <Divider /><Divider />
-                            <Grid item sx={{border: 0}} xs={12}>
-                                <center>Wygrywa gracz {race.result.winner.replaceAll("<player1>", user?.data?.nick).replaceAll("<player2>", race?.userViewed?.nick)}
-                                    {" "}zyskując {race.result.exp} doświadczenia i {race.result.money} dolarów.</center>
-                            </Grid>
+                }
+            />
 
-                        </Grid>
-                    )}
-                </LightedGroup></div>
+            {race.userViewed && (
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <UserMediumView userViewed={race.userViewed} />
+                    <Button
+                        onClick={fightOponent}
+                        variant="contained"
+                        disabled={maxTimestamp > Date.now()}
+                        sx={{
+                            background: 'linear-gradient(45deg, rgba(200,50,50,0.9) 30%, rgba(220,70,70,0.9) 90%)',
+                            alignSelf: 'center',
+                            px: 4,
+                            '&:hover': {
+                                background: 'linear-gradient(45deg, rgba(220,70,70,0.9) 30%, rgba(240,90,90,0.9) 90%)',
+                            }
+                        }}>
+                        Race!
+                    </Button>
+                </Box>
             )}
 
-        </LightedGroup>
-    )
+            {maxTimestamp > Date.now() && (
+                <Timer timestamp={maxTimestamp} />
+            )}
+
+            {isFight && race.result && (
+                <ActionCard
+                    title="Race Results"
+                    description={`${race.result.winner} wins! Money: $${race.result.money}, Experience: ${race.result.exp}`}
+                />
+            )}
+        </Box>
+    );
 }

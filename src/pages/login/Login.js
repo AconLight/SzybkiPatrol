@@ -22,13 +22,12 @@ import getPalette from '../../utils/theme';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)' }} align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link sx={{ color: 'rgba(255,255,255,0.7)' }} href="#">
+        Szybki Patrol
       </Link>{' '}
       {new Date().getFullYear()}
-      {'.'}
     </Typography>
   );
 }
@@ -73,11 +72,21 @@ export default function Login() {
     <div style={{ 
       backgroundImage: `url(${track})`,
       height: '100vh',
-      backgroundPosition: 'center top',
-      backgroundSize: '100% auto'
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+      position: 'relative',
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+      }
     }}>
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{ position: 'relative', zIndex: 1 }}>
         <CssBaseline />
         <Box
           sx={{
@@ -88,24 +97,29 @@ export default function Login() {
         <Box
           sx={{
             padding: 4,
-            opacity: 0.9,
-            borderRadius: 1,
-            boxShadow: 3,
+            borderRadius: 2,
+            boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            bgcolor: 'primary.main',
-            '&:hover': {
-              bgcolor: 'primary.dark',
-            },
+            background: 'linear-gradient(180deg, rgba(20,20,20,0.95) 0%, rgba(15,15,15,0.98) 100%)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(10px)',
           }}
         >
-        
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <DirectionsCar />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
+          <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
+            <Avatar sx={{ bgcolor: 'error.main', transform: 'rotate(-15deg)' }}>
+              <DirectionsCar />
+            </Avatar>
+            <Avatar sx={{ bgcolor: 'primary.main' }}>
+              <DirectionsCar />
+            </Avatar>
+            <Avatar sx={{ bgcolor: 'error.main', transform: 'rotate(15deg)' }}>
+              <DirectionsCar />
+            </Avatar>
+          </Box>
+          <Typography component="h1" variant="h4" sx={{ color: 'white', fontWeight: 'bold', mb: 3 }}>
+            SZYBKI PATROL
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -113,43 +127,97 @@ export default function Login() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Nick / Email"
               name="email"
               autoComplete="email"
               autoFocus
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  color: 'white',
+                  '& fieldset': {
+                    borderColor: 'rgba(255,255,255,0.3)',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'rgba(255,255,255,0.5)',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'primary.main',
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: 'rgba(255,255,255,0.7)',
+                },
+              }}
             />
             <TextField
               margin="normal"
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Hasło"
               type="password"
               id="password"
               autoComplete="current-password"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  color: 'white',
+                  '& fieldset': {
+                    borderColor: 'rgba(255,255,255,0.3)',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'rgba(255,255,255,0.5)',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'primary.main',
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: 'rgba(255,255,255,0.7)',
+                },
+              }}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              control={
+                <Checkbox 
+                  value="remember" 
+                  sx={{
+                    color: 'rgba(255,255,255,0.7)',
+                    '&.Mui-checked': {
+                      color: 'primary.main',
+                    },
+                  }}
+                />
+              }
+              label={<Typography sx={{ color: 'rgba(255,255,255,0.7)' }}>Zapamiętaj mnie</Typography>}
             />
             <Button
               type="submit"
-              //href='overview'
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ 
+                mt: 3, 
+                mb: 2,
+                height: '48px',
+                background: 'linear-gradient(90deg, #ff4d4d 0%, #f9cb28 100%)',
+                fontSize: '1.1rem',
+                fontWeight: 'bold',
+                textTransform: 'none',
+                '&:hover': {
+                  background: 'linear-gradient(90deg, #ff3333 0%, #f9bc28 100%)',
+                }
+              }}
             >
-              Sign In
+              Wejdź do gry
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
+            <Grid container spacing={2} sx={{ mt: 1 }}>
+              <Grid item xs={6}>
+                <Link href="#" variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', '&:hover': { color: 'primary.main' } }}>
+                  Zapomniałeś hasła?
                 </Link>
               </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+              <Grid item xs={6} sx={{ textAlign: 'right' }}>
+                <Link href="#" variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', '&:hover': { color: 'primary.main' } }}>
+                  Załóż konto
                 </Link>
               </Grid>
             </Grid>

@@ -31,44 +31,56 @@ export default function Shop() {
      }, []);
 
     const items = shop.items && shop.items.filter(el => el?.category == cat)
+
+    const categories = [...new Set(shop.items && shop.items.map(el => el?.category))]
+
+    console.log('items', shop?.items)
+
+    console.log('categories', categories)
+
+    const testMenuItems = categories && categories.map((item) => ({
+        href: `/shop/${item}`,
+        title: item,
+        cat: item
+    }));
   
-    const testMenuItems = [
-        {
-            href: '/shop/cars',
-            title: 'samochody',
-            cat: "car"
-        },
-        // {
-        //     href: '/shop/paintwork',
-        //     title: 'lakiery',
-        //     cat: "paintwork"
-        // },
-        {
-            href: '/shop/bodyworks',
-            title: 'karoseria',
-            cat: "bodyworks"
-        },
-        {
-            href: '/shop/weapons',
-            title: 'uzbrojenie',
-            cat: "weapons"
-        },
-        // {
-        //     href: '/shop/tires',
-        //     title: 'opony',
-        //     cat: "tire"
-        // },
-        // {
-        //     href: '/shop/engines',
-        //     title: 'silniki',
-        //     cat: "engine"
-        // },
-        // {
-        //     href: '/shop/addons',
-        //     title: 'dodatki',
-        //     cat: "addon"
-        // },
-    ];
+    // const testMenuItems = [
+    //     {
+    //         href: '/shop/cars',
+    //         title: 'samochody',
+    //         cat: "car"
+    //     },
+    //     // {
+    //     //     href: '/shop/paintwork',
+    //     //     title: 'lakiery',
+    //     //     cat: "paintwork"
+    //     // },
+    //     {
+    //         href: '/shop/bodyworks',
+    //         title: 'karoseria',
+    //         cat: "bodyworks"
+    //     },
+    //     {
+    //         href: '/shop/weapons',
+    //         title: 'uzbrojenie',
+    //         cat: "weapons"
+    //     },
+    //     // {
+    //     //     href: '/shop/tires',
+    //     //     title: 'opony',
+    //     //     cat: "tire"
+    //     // },
+    //     // {
+    //     //     href: '/shop/engines',
+    //     //     title: 'silniki',
+    //     //     cat: "engine"
+    //     // },
+    //     // {
+    //     //     href: '/shop/addons',
+    //     //     title: 'dodatki',
+    //     //     cat: "addon"
+    //     // },
+    // ];
 
     
 

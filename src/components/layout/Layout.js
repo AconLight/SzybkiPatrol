@@ -44,16 +44,34 @@ export default function Layout() {
                 </Avatar>
             </Box>
             <Divider />
-            <Box sx={{display: 'flex', flexDirection: 'row', mt: 8}}>
-                <Menu />
-                <Box sx={{flexGrow: 3, pt: 3, width: '40%'}}>
-                    <main className={'flex-1'}>
+            <Box sx={{
+                display: 'flex', 
+                flexDirection: 'row', 
+                mt: 2,
+                justifyContent: 'center',
+                position: 'relative',
+                width: '100%',
+                maxWidth: '1200px',
+                mx: 'auto'
+            }}>
+                <Box sx={{ 
+                    position: 'absolute',
+                    left: 0,
+                    top: 0
+                }}>
+                    <Menu />
+                </Box>
+                <Box sx={{
+                    width: '800px',
+                    pt: 0,
+                    ml: '220px'
+                }}>
+                    <main>
                         <MainGroup>
                             <Outlet />
                         </MainGroup>
                     </main>
                 </Box>
-                <Box sx={{flexGrow: 4, width: '30%'}}></Box>
             </Box>
         </div>
     );

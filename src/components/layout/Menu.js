@@ -26,15 +26,12 @@ export default function Menu() {
             display: 'flex', 
             flexDirection: 'column', 
             justifyContent: 'flex-start', 
-            alignItems: 'flex-end', 
-            flexGrow: 3, 
-            width: '30%', 
-            pr: 4
+            alignItems: 'flex-start'
         }}>
             <Paper sx={{
-                width: 250,
-                pt: 4,
-                pb: 15,
+                width: 180,
+                pt: 2,
+                pb: 8,
                 background: 'linear-gradient(180deg, rgba(32,32,32,0.95) 0%, rgba(20,20,20,0.98) 100%)',
                 boxShadow: '0 0 20px rgba(0,0,0,0.5)',
                 borderRadius: '8px',
@@ -47,14 +44,15 @@ export default function Menu() {
                             onClick={() => dispatch(logout())}
                             variant="contained"
                             sx={{
-                                mx: 3,
-                                my: 1,
-                                width: '200px',
+                                mx: 1,
+                                my: 0.5,
+                                width: '160px',
                                 background: 'linear-gradient(45deg, #d32f2f 30%, #c62828 90%)',
                                 color: '#fff',
                                 textTransform: 'uppercase',
-                                letterSpacing: '2px',
+                                letterSpacing: '1px',
                                 fontWeight: 'bold',
+                                fontSize: '0.8rem',
                                 border: '1px solid rgba(255,0,0,0.3)',
                                 '&:hover': {
                                     background: 'linear-gradient(45deg, #c62828 30%, #b71c1c 90%)',
@@ -73,14 +71,15 @@ export default function Menu() {
                             <Button
                                 variant="contained"
                                 sx={{
-                                    mx: 3,
-                                    my: 1,
-                                    width: '200px',
+                                    mx: 1,
+                                    my: 0.5,
+                                    width: '160px',
                                     background: 'linear-gradient(45deg, rgba(50,50,50,0.9) 30%, rgba(70,70,70,0.9) 90%)',
                                     color: '#fff',
                                     textTransform: 'uppercase',
-                                    letterSpacing: '1px',
+                                    letterSpacing: '0.5px',
                                     fontWeight: 'bold',
+                                    fontSize: '0.8rem',
                                     border: '1px solid rgba(255,255,255,0.1)',
                                     '&:hover': {
                                         background: 'linear-gradient(45deg, rgba(70,70,70,0.9) 30%, rgba(90,90,90,0.9) 90%)',

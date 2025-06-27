@@ -18,6 +18,7 @@ import { login } from '../../redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { lime, purple } from '@mui/material/colors';
 import getPalette from '../../utils/theme';
+import { fetchImages } from '../../redux/images/imagesSlice';
 
 
 function Copyright(props) {
@@ -47,6 +48,7 @@ const theme = createTheme({
 
 export default function Login() {
   const user = useSelector((state) => state.user)
+  const images = useSelector((state) => state.images)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -68,9 +70,13 @@ export default function Login() {
     }
  }, [user]);
 
+  React.useEffect(() => {
+    dispatch(fetchImages());
+  }, []);
+
   return (
     <div style={{ 
-      backgroundImage: `url(${track})`,
+      backgroundImage: `url(${images?.links?.['loginbg'] || track})`,
       height: '100vh',
       backgroundPosition: 'center',
       backgroundSize: 'cover',

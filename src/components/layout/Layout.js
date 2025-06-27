@@ -14,7 +14,6 @@ export default function Layout() {
     const navigate = useNavigate();
     const user = useSelector((state) => state.user)
     const images = useSelector((state) => state.images)
-    console.log('images elo', images)
     const dispatch = useDispatch()
     
     React.useEffect(() => {

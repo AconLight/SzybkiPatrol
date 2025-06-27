@@ -8,10 +8,13 @@ import { refreshToken } from "../../redux/user/userSlice";
 import track2 from '../../assets/track_logged.webp';
 import Menu from './Menu';
 import MainGroup from '../group/MainGroup';
+import { fetchImages } from "../../redux/images/imagesSlice";
 
 export default function Layout() {
     const navigate = useNavigate();
     const user = useSelector((state) => state.user)
+    const images = useSelector((state) => state.images)
+    console.log('images elo', images)
     const dispatch = useDispatch()
     
     React.useEffect(() => {
@@ -24,9 +27,13 @@ export default function Layout() {
         }
     }, [user]);
 
+    React.useEffect(() => {
+        dispatch(fetchImages());
+    }, []);
+
     return (
         <div style={{ 
-            backgroundImage: `url(${track2})`,
+            backgroundImage: `url(${images?.links?.['background'] || track2})`,
             minHeight: '100vh',
             backgroundPosition: 'center top',
             backgroundSize: '100% auto',
